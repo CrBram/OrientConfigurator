@@ -18,6 +18,15 @@ function App() {
 
   return (
     <>
+      {/* Orient Logo */}
+      <div className="fixed top-6 left-6 z-20 pointer-events-none">
+        <img
+          src="/Orient-Logo-text.png"
+          alt="Orient"
+          className="h-8 md:h-10 opacity-80"
+        />
+      </div>
+
       {/* Canvas Container */}
       <div className="fixed top-0 left-0 right-0 bottom-0 lg:right-[calc(320px+1.5rem)]">
         <Canvas
