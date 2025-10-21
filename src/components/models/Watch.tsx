@@ -9,6 +9,7 @@ interface WatchProps {
 export function Watch(props: WatchProps) {
   const { nodes, materials } = useGLTF("/models/OrientWatchShaded.glb") as any;
 
+  // Glass material
   const glassMaterial = useMemo(() => {
     return new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
