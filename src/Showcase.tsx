@@ -1,11 +1,17 @@
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import { Watch } from "./components/models/Watch";
 
 const Showcase = () => {
   return (
     <>
       {/* Controls */}
-      <OrbitControls makeDefault />
+      <OrbitControls
+        makeDefault
+        enablePan={false}
+        minDistance={3}
+        maxDistance={8}
+        target={[0, 0, 0]}
+      />
 
       {/* Natural Environment Lighting */}
       <Environment preset="sunset" />
@@ -14,14 +20,17 @@ const Showcase = () => {
       <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
       <directionalLight position={[-3, 2, 1]} intensity={0.5} color="#ffa500" />
 
-      {/* Display Box */}
-      <mesh position={[0, -2, 0]} receiveShadow>
-        <boxGeometry args={[4, 0.2, 4]} />
-        <meshStandardMaterial color="#C6AC8F" roughness={0.2} metalness={0.4} />
-      </mesh>
-
       {/* Models */}
       <Watch />
+
+      {/* Ground Shadow */}
+      <ContactShadows
+        position={[0, -2, 0]}
+        opacity={0.7}
+        scale={10}
+        blur={2.5}
+        far={6}
+      />
     </>
   );
 };

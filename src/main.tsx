@@ -1,8 +1,10 @@
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Canvas } from "@react-three/fiber";
 import Showcase from "./Showcase.tsx";
+import { ConfigurationPanel } from "./components/ConfigurationPanel.tsx";
+import { Menu } from "lucide-react";
 
 const cameraSettings = {
   fov: 45,
@@ -11,10 +13,49 @@ const cameraSettings = {
   position: [8, 8, 8] as [number, number, number],
 };
 
+function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  return (
+    <>
+      {/* Canvas Container */}
+      <div className="fixed top-0 left-0 right-0 bottom-0 lg:right-[calc(320px+1.5rem)]">
+        <Canvas
+          camera={cameraSettings}
+          shadows
+          style={{ background: "#efefef" }}
+        >
+          <Showcase />
+        </Canvas>
+      </div>
+
+      {/* Mobile Menu Toggle Button */}
+      <button
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+        className="lg:hidden fixed top-6 right-6 z-20 p-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-xl"
+        aria-label="Toggle configuration menu"
+      >
+        <Menu className="w-6 h-6" />
+      </button>
+
+      {/* Overlay for mobile */}
+      {isMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black/50 z-10"
+          onClick={() => setIsMenuOpen(false)}
+        />
+      )}
+
+      {/* Configuration Panel */}
+      <div className={`lg:block ${isMenuOpen ? "block" : "hidden"}`}>
+        <ConfigurationPanel onClose={() => setIsMenuOpen(false)} />
+      </div>
+    </>
+  );
+}
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Canvas camera={cameraSettings} shadows style={{ background: "#DED1B6" }}>
-      <Showcase />
-    </Canvas>
+    <App />
   </StrictMode>
 );

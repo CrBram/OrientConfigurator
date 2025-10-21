@@ -29,7 +29,7 @@ export function Watch(props: WatchProps) {
 
   return (
     <group {...props} dispose={null}>
-      <group position={[0.003, 0.2, -0.049]} scale={2.565}>
+      <group position={[-0.003, 0.2, -0.049]} scale={2.565}>
         <mesh
           castShadow
           receiveShadow
