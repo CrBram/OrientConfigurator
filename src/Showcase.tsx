@@ -13,7 +13,6 @@ const Showcase = () => {
       {/* Enhanced Lighting Setup */}
       <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
       <directionalLight position={[-3, 2, 1]} intensity={0.5} color="#ffa500" />
-      <ambientLight intensity={0.3} />
 
       {/* Display Box */}
       <mesh position={[0, -2, 0]} receiveShadow>
