@@ -23,7 +23,10 @@ function App() {
       <div className="flex-1 relative" style={{ background: "#ededed" }}>
         {/* Title overlay */}
         <div className="absolute top-6 left-6 pointer-events-none z-0">
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-gray-900/70 leading-none tracking-tight select-none">
+          <h1
+            className="text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight select-none"
+            style={{ color: "#2B2B2B" }}
+          >
             <span className="font-light">Orient</span>
             <br />
             Bambino
