@@ -1,5 +1,6 @@
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useFrame } from "@react-three/fiber";
+import { useMemo, useRef } from "react";
 import * as THREE from "three";
 
 interface WatchProps {
@@ -8,6 +9,11 @@ interface WatchProps {
 
 export function Watch(props: WatchProps) {
   const { nodes, materials } = useGLTF("/models/OrientWatchShaded.glb") as any;
+
+  // Refs for watch hand groups (these will rotate around the watch center)
+  const hourHandGroupRef = useRef<THREE.Group>(null);
+  const minuteHandGroupRef = useRef<THREE.Group>(null);
+  const secondHandGroupRef = useRef<THREE.Group>(null);
 
   // Glass material
   const glassMaterial = useMemo(() => {
@@ -27,6 +33,39 @@ export function Watch(props: WatchProps) {
       side: THREE.DoubleSide,
     });
   }, []);
+
+  // Animate watch hands based on current time
+  useFrame(() => {
+    const now = new Date();
+    const hours = now.getHours() % 12; // 12-hour format
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    // Calculate rotations
+    // Second hand ticks discretely (no milliseconds for that classic tick)
+    const secondAngle = (seconds / 60) * Math.PI * 2;
+    // Minute hand moves smoothly with seconds
+    const minuteAngle = ((minutes + seconds / 60) / 60) * Math.PI * 2;
+    // Hour hand moves smoothly with minutes
+    const hourAngle = ((hours + minutes / 60) / 12) * Math.PI * 2;
+
+    // Initial rotations of the hands in the model (need to compensate for these)
+    const hourOffset = 0.841;
+    const minuteOffset = -0.816;
+    const secondOffset = 0.739;
+
+    // Rotate the groups around Y-axis (watch center)
+    // Subtract the initial offsets so hands align correctly with current time
+    if (hourHandGroupRef.current) {
+      hourHandGroupRef.current.rotation.y = -hourAngle - hourOffset;
+    }
+    if (minuteHandGroupRef.current) {
+      minuteHandGroupRef.current.rotation.y = -minuteAngle - minuteOffset;
+    }
+    if (secondHandGroupRef.current) {
+      secondHandGroupRef.current.rotation.y = -secondAngle - secondOffset;
+    }
+  });
 
   return (
     <group {...props} dispose={null}>
@@ -145,15 +184,18 @@ export function Watch(props: WatchProps) {
           position={[-0.002, 0.192, -0.115]}
           scale={0.055}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube.geometry}
-          material={materials.Letters}
-          position={[-0.086, 0.203, 0.094]}
-          rotation={[-Math.PI, 0.739, -Math.PI]}
-          scale={[0.001, 0.002, 0.164]}
-        />
+        {/* Second hand group - rotates around watch center */}
+        <group ref={secondHandGroupRef} position={[0, 0.199, 0]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube.geometry}
+            material={materials.Letters}
+            position={[-0.086, 0.004, 0.094]}
+            rotation={[-Math.PI, 0.739, -Math.PI]}
+            scale={[0.001, 0.002, 0.164]}
+          />
+        </group>
         <mesh
           castShadow
           receiveShadow
@@ -179,15 +221,18 @@ export function Watch(props: WatchProps) {
           position={[0, 0.173, -0.001]}
           scale={0.39}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Hours.geometry}
-          material={materials.Letters}
-          position={[-0.071, 0.194, -0.063]}
-          rotation={[-0.038, 0.841, -0.022]}
-          scale={[0.174, 0.086, 0.105]}
-        />
+        {/* Hour hand group - rotates around watch center */}
+        <group ref={hourHandGroupRef} position={[0, 0.199, 0]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Hours.geometry}
+            material={materials.Letters}
+            position={[-0.071, -0.005, -0.063]}
+            rotation={[-0.038, 0.841, -0.022]}
+            scale={[0.174, 0.086, 0.105]}
+          />
+        </group>
         <mesh
           castShadow
           receiveShadow
@@ -196,15 +241,18 @@ export function Watch(props: WatchProps) {
           position={[-0.001, 0.201, -0.001]}
           scale={[0.042, 0.028, 0.019]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Minutes.geometry}
-          material={materials.Letters}
-          position={[0.103, 0.203, -0.097]}
-          rotation={[0.017, -0.816, -0.002]}
-          scale={[0.181, 0.089, 0.154]}
-        />
+        {/* Minute hand group - rotates around watch center */}
+        <group ref={minuteHandGroupRef} position={[0, 0.199, 0]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Minutes.geometry}
+            material={materials.Letters}
+            position={[0.103, 0.004, -0.097]}
+            rotation={[0.017, -0.816, -0.002]}
+            scale={[0.181, 0.089, 0.154]}
+          />
+        </group>
         <mesh
           castShadow
           receiveShadow
