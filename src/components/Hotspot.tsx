@@ -27,15 +27,15 @@ export function Hotspot({
     <group>
       <Line
         points={points}
-        color={hovered ? "#ffffff" : "#8b8b8b"}
-        lineWidth={hovered ? 2 : 1}
+        color={hovered ? "#ffffff" : "#838383"}
+        lineWidth={hovered ? 2 : 1.5}
         transparent
-        opacity={hovered ? 0.9 : 0.6}
+        opacity={hovered ? 0.9 : 0.8}
       />
       <mesh position={position}>
         <sphereGeometry args={[0.02, 16, 16]} />
         <meshBasicMaterial
-          color={hovered ? "#ffffff" : "#8b8b8b"}
+          color={hovered ? "#ffffff" : "#838383"}
           transparent
           opacity={hovered ? 1 : 0.8}
         />

@@ -32,7 +32,7 @@ function App() {
         <Canvas
           camera={cameraSettings}
           shadows
-          style={{ background: "#efefef" }}
+          style={{ background: "#ededed" }}
         >
           <Showcase cameraView={cameraView} setCameraView={setCameraView} />
         </Canvas>

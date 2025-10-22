@@ -31,7 +31,7 @@
     border-color: var(--color-border);
   }
   body {
-    background-color: #efefef;
+    background-color: #ededed;
     color: var(--color-foreground);
   }
 }
