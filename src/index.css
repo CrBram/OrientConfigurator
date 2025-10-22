@@ -153,6 +153,24 @@ body,
   pointer-events: none;
 }
 
+@media (min-width: 768px) {
+  .back-button-container {
+    bottom: 48px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .back-button-container {
+    bottom: 64px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .back-button-container {
+    bottom: 80px;
+  }
+}
+
 .back-button {
   display: flex;
   align-items: center;
