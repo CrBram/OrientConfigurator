@@ -20,17 +20,9 @@ function App() {
     <div className="flex flex-col h-screen">
       <Navigation />
 
-      <div className="flex-1 relative">
-        <Canvas
-          camera={cameraSettings}
-          shadows
-          style={{ background: "#ededed" }}
-        >
-          <Showcase cameraView={cameraView} setCameraView={setCameraView} />
-        </Canvas>
-
+      <div className="flex-1 relative" style={{ background: "#ededed" }}>
         {/* Title overlay */}
-        <div className="absolute top-6 left-6 pointer-events-none">
+        <div className="absolute top-6 left-6 pointer-events-none z-0">
           <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold text-gray-900/70 leading-none tracking-tight select-none">
             <span className="font-light">Orient</span>
             <br />
@@ -38,9 +30,25 @@ function App() {
           </h1>
         </div>
 
+        <Canvas
+          camera={cameraSettings}
+          shadows
+          gl={{ alpha: true }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: 10,
+          }}
+        >
+          <Showcase cameraView={cameraView} setCameraView={setCameraView} />
+        </Canvas>
+
         {/* Back button */}
         {cameraView !== "default" && (
-          <div className="back-button-container">
+          <div className="back-button-container" style={{ zIndex: 20 }}>
             <button
               className="back-button"
               onClick={() => setCameraView("default")}
