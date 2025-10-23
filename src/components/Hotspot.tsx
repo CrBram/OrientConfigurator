@@ -55,9 +55,10 @@ export function Hotspot({
           <div className={`hotspot-circle ${hovered ? "hovered" : ""}`}>
             <div className="hotspot-pulse" />
           </div>
-          <div className={`hotspot-label ${hovered ? "visible" : ""}`}>
+          {/* Label for the hotspots on hover */}
+          {/* <div className={`hotspot-label ${hovered ? "visible" : ""}`}>
             <div className="hotspot-label-title">{label}</div>
-          </div>
+          </div> */}
           {showDescriptions && (
             <div className="hotspot-component-name">{componentName}</div>
           )}
