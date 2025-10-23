@@ -54,7 +54,6 @@ const Showcase = ({
           <Hotspot
             position={[-0.2, 0.7, 0]}
             targetPosition={[-1.2, 1.2, 0]}
-            label="Face"
             componentName={getComponentName("face", selectedComponents.face)}
             onClick={() => onHotspotClick("face")}
             showDescriptions={showDescriptions}
@@ -62,7 +61,6 @@ const Showcase = ({
           <Hotspot
             position={[0, 0.52, 1.8]}
             targetPosition={[0, 0.75, 1.8]}
-            label="Strap"
             componentName={getComponentName("strap", selectedComponents.strap)}
             onClick={() => onHotspotClick("strap")}
             showDescriptions={showDescriptions}
@@ -70,7 +68,6 @@ const Showcase = ({
           <Hotspot
             position={[1.02, 0.7, 0]}
             targetPosition={[1.8, 1, 0.5]}
-            label="Crown"
             componentName={getComponentName("knob", selectedComponents.knob)}
             onClick={() => onHotspotClick("knob")}
             showDescriptions={showDescriptions}

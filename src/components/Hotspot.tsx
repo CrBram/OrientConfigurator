@@ -6,7 +6,6 @@ import * as THREE from "three";
 interface HotspotProps {
   position: [number, number, number]; // Position on the watch
   targetPosition: [number, number, number]; // Where the circle appears
-  label: string;
   componentName: string; // Name of the selected component
   onClick: () => void;
   showDescriptions?: boolean;
@@ -15,7 +14,6 @@ interface HotspotProps {
 export function Hotspot({
   position,
   targetPosition,
-  label,
   componentName,
   onClick,
   showDescriptions = true,
