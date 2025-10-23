@@ -4,6 +4,7 @@ import "./index.css";
 import { Canvas } from "@react-three/fiber";
 import Showcase from "./Showcase.tsx";
 import { Navigation } from "./components/Navigation.tsx";
+import { CheckoutCard } from "./components/CheckoutCard.tsx";
 import type { CameraView } from "./components/CameraControls.tsx";
 
 const cameraSettings = {
@@ -15,6 +16,11 @@ const cameraSettings = {
 
 function App() {
   const [cameraView, setCameraView] = useState<CameraView>("default");
+  const totalPrice = 499.99; // Default price for the watch
+
+  const handleCheckout = () => {
+    console.log("Checkout initiated for $", totalPrice);
+  };
 
   return (
     <div className="flex flex-col h-screen mx-auto w-full max-w-[1920px]">
@@ -72,6 +78,9 @@ function App() {
             </button>
           </div>
         )}
+
+        {/* Checkout Card */}
+        <CheckoutCard totalPrice={totalPrice} onCheckout={handleCheckout} />
       </div>
     </div>
   );
