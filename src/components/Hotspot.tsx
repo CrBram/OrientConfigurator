@@ -9,6 +9,7 @@ interface HotspotProps {
   label: string;
   componentName: string; // Name of the selected component
   onClick: () => void;
+  showDescriptions?: boolean;
 }
 
 export function Hotspot({
@@ -17,6 +18,7 @@ export function Hotspot({
   label,
   componentName,
   onClick,
+  showDescriptions = true,
 }: HotspotProps) {
   const [hovered, setHovered] = useState(false);
 
@@ -56,7 +58,9 @@ export function Hotspot({
           <div className={`hotspot-label ${hovered ? "visible" : ""}`}>
             <div className="hotspot-label-title">{label}</div>
           </div>
-          <div className="hotspot-component-name">{componentName}</div>
+          {showDescriptions && (
+            <div className="hotspot-component-name">{componentName}</div>
+          )}
         </div>
       </Html>
     </group>

@@ -4,7 +4,7 @@ import "./index.css";
 import { Canvas } from "@react-three/fiber";
 import Showcase from "./Showcase.tsx";
 import { Navigation } from "./components/Navigation.tsx";
-import { CheckoutCard } from "./components/CheckoutCard.tsx";
+import { Footer } from "./components/Footer.tsx";
 import type { CameraView } from "./components/CameraControls.tsx";
 
 const cameraSettings = {
@@ -16,10 +16,15 @@ const cameraSettings = {
 
 function App() {
   const [cameraView, setCameraView] = useState<CameraView>("default");
+  const [showDescriptions, setShowDescriptions] = useState(true);
   const totalPrice = 499.99; // Default price for the watch
 
   const handleCheckout = () => {
     console.log("Checkout initiated for $", totalPrice);
+  };
+
+  const toggleDescriptions = () => {
+    setShowDescriptions(!showDescriptions);
   };
 
   return (
@@ -51,7 +56,11 @@ function App() {
             zIndex: 10,
           }}
         >
-          <Showcase cameraView={cameraView} setCameraView={setCameraView} />
+          <Showcase
+            cameraView={cameraView}
+            setCameraView={setCameraView}
+            showDescriptions={showDescriptions}
+          />
         </Canvas>
 
         {/* Back button */}
@@ -79,8 +88,13 @@ function App() {
           </div>
         )}
 
-        {/* Checkout Card */}
-        <CheckoutCard totalPrice={totalPrice} onCheckout={handleCheckout} />
+        {/* Footer */}
+        <Footer
+          showDescriptions={showDescriptions}
+          onToggleDescriptions={toggleDescriptions}
+          totalPrice={totalPrice}
+          onCheckout={handleCheckout}
+        />
       </div>
     </div>
   );
