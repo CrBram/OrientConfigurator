@@ -160,6 +160,7 @@ function App() {
           onToggleDescriptions={toggleDescriptions}
           totalPrice={totalPrice}
           onCheckout={handleCheckout}
+          showComponentOptions={showComponentOptions}
         />
       </div>
     </div>

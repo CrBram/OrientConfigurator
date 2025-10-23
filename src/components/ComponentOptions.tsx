@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { ArrowRightToLine, ArrowLeftToLine } from "lucide-react";
+import {
+  ArrowRightToLine,
+  ArrowLeftToLine,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 
 export interface ComponentOption {
   id: string;
@@ -35,28 +40,42 @@ export function ComponentOptions({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="fixed top-28 right-6 md:top-32 md:right-8 lg:top-34 lg:right-12 xl:top-36 xl:right-16 z-50 max-w-sm component-options-panel">
+    <div className="fixed bottom-0 left-0 right-0 md:top-32 md:right-8 md:left-auto md:bottom-auto lg:top-34 lg:right-12 xl:top-36 xl:right-16 z-50 md:max-w-sm component-options-panel">
       {isCollapsed ? (
-        <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
-          <button
-            onClick={() => setIsCollapsed(false)}
-            className="flex items-center justify-center w-8 h-8 rounded-[5rem] cursor-pointer transition-colors duration-200"
-            style={{
-              backgroundColor: "rgba(43, 43, 43, 0.9)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(30, 30, 30, 0.95)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "rgba(43, 43, 43, 0.9)";
-            }}
-          >
-            <ArrowLeftToLine size={16} color="white" strokeWidth={2} />
-          </button>
-        </Card>
+        <div className="flex justify-end md:justify-start p-4 md:p-0">
+          <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
+            <button
+              onClick={() => setIsCollapsed(false)}
+              className="flex items-center justify-center w-8 h-8 rounded-[5rem] cursor-pointer transition-colors duration-200"
+              style={{
+                backgroundColor: "rgba(43, 43, 43, 0.9)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  "rgba(30, 30, 30, 0.95)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(43, 43, 43, 0.9)";
+              }}
+            >
+              <ChevronUp
+                size={16}
+                color="white"
+                strokeWidth={2}
+                className="md:hidden"
+              />
+              <ArrowLeftToLine
+                size={16}
+                color="white"
+                strokeWidth={2}
+                className="hidden md:block"
+              />
+            </button>
+          </Card>
+        </div>
       ) : (
-        <Card className="bg-[#fff9f9] backdrop-blur-md border-0 shadow-xl rounded-2xl overflow-hidden">
-          <div className="p-4 border-b border-gray-200/50">
+        <Card className="bg-[#fff9f9] backdrop-blur-md border-0 shadow-xl rounded-t-2xl md:rounded-2xl overflow-hidden w-full md:w-auto">
+          <div className="p-3 md:p-4 border-b border-gray-200/50">
             <div className="flex items-center justify-between mb-0.5">
               <h2
                 className="text-lg font-bold"
@@ -69,7 +88,16 @@ export function ComponentOptions({
                   onClick={() => setIsCollapsed(true)}
                   className="text-gray-500 hover:text-gray-900 p-1 cursor-pointer transition-colors duration-200 rounded-md hover:bg-gray-200/80"
                 >
-                  <ArrowRightToLine size={16} strokeWidth={2} />
+                  <ChevronDown
+                    size={16}
+                    strokeWidth={2}
+                    className="md:hidden"
+                  />
+                  <ArrowRightToLine
+                    size={16}
+                    strokeWidth={2}
+                    className="hidden md:block"
+                  />
                 </button>
                 <button
                   onClick={onClose}
@@ -93,8 +121,8 @@ export function ComponentOptions({
             </div>
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
-          <div className="max-h-96 overflow-y-auto">
-            <div className="p-2 space-y-2">
+          <div className="max-h-48 md:max-h-96 overflow-y-auto">
+            <div className="p-1 md:p-2 space-y-2">
               {category.options.map((option) => (
                 <div
                   key={option.id}
@@ -107,7 +135,7 @@ export function ComponentOptions({
                   onMouseEnter={() => setHoveredOption(option.id)}
                   onMouseLeave={() => setHoveredOption(null)}
                 >
-                  <div className="p-3">
+                  <div className="p-2 md:p-3">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg
@@ -192,7 +220,7 @@ export function ComponentOptions({
             </div>
           </div>
 
-          <div className="p-4 border-t border-gray-200/50 bg-gray-50/30">
+          <div className="p-3 md:p-4 border-t border-gray-200/50 bg-gray-50/30">
             <Button
               onClick={onClose}
               className="w-full bg-[#b36868] hover:bg-[#a55a5a] text-white text-sm py-2 cursor-pointer"
