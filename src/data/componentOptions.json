@@ -7,7 +7,6 @@
         "id": "blue-quartz",
         "name": "Blue Quartz",
         "description": "Classic blue dial with elegant finish",
-        "image": "/placeholder-face-blue.jpg",
         "price": 0,
         "isDefault": true
       },
@@ -15,7 +14,6 @@
         "id": "white-pearl",
         "name": "White Pearl",
         "description": "Luminous white pearl dial",
-        "image": "/placeholder-face-white.jpg",
         "price": 25.0,
         "isDefault": false
       },
@@ -23,7 +21,6 @@
         "id": "black-diamond",
         "name": "Black Diamond",
         "description": "Premium black dial with diamond indices",
-        "image": "/placeholder-face-black.jpg",
         "price": 75.0,
         "isDefault": false
       },
@@ -31,7 +28,6 @@
         "id": "rose-gold",
         "name": "Rose Gold",
         "description": "Luxurious rose gold dial",
-        "image": "/placeholder-face-rose.jpg",
         "price": 125.0,
         "isDefault": false
       }
@@ -45,7 +41,6 @@
         "id": "stainless-steel",
         "name": "Stainless Steel",
         "description": "Classic stainless steel bracelet",
-        "image": "/placeholder-strap-steel.jpg",
         "price": 0,
         "isDefault": true
       },
@@ -53,7 +48,6 @@
         "id": "leather-brown",
         "name": "Brown Leather",
         "description": "Premium genuine leather strap",
-        "image": "/placeholder-strap-brown.jpg",
         "price": 35.0,
         "isDefault": false
       },
@@ -61,7 +55,6 @@
         "id": "leather-black",
         "name": "Black Leather",
         "description": "Sleek black leather strap",
-        "image": "/placeholder-strap-black.jpg",
         "price": 35.0,
         "isDefault": false
       },
@@ -69,7 +62,6 @@
         "id": "rubber-sport",
         "name": "Sport Rubber",
         "description": "Durable rubber strap for active lifestyle",
-        "image": "/placeholder-strap-rubber.jpg",
         "price": 20.0,
         "isDefault": false
       },
@@ -77,7 +69,6 @@
         "id": "mesh-silver",
         "name": "Silver Mesh",
         "description": "Modern mesh bracelet",
-        "image": "/placeholder-strap-mesh.jpg",
         "price": 45.0,
         "isDefault": false
       }
@@ -91,7 +82,7 @@
         "id": "single-crown",
         "name": "Single Crown",
         "description": "Classic single crown design",
-        "image": "/placeholder-crown-steel.jpg",
+        "image": "/components/crowns/crown1.png",
         "price": 0,
         "isDefault": true
       },
@@ -99,7 +90,7 @@
         "id": "double-crown",
         "name": "Double Crown",
         "description": "Modern double crown design",
-        "image": "/placeholder-crown-black.jpg",
+        "image": "/components/crowns/crown2.png",
         "price": 30.0,
         "isDefault": false
       },
@@ -107,7 +98,7 @@
         "id": "triple-crown",
         "name": "Triple Crown",
         "description": "Elegant triple crown design",
-        "image": "/placeholder-crown-rose.jpg",
+        "image": "/components/crowns/crown3.png",
         "price": 45.0,
         "isDefault": false
       }
