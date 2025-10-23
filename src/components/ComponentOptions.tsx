@@ -35,9 +35,8 @@ export function ComponentOptions({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className="fixed top-6 right-6 md:top-8 md:right-8 lg:top-24 lg:right-12 xl:top-32 xl:right-16 z-50 max-w-sm component-options-panel">
+    <div className="fixed top-28 right-6 md:top-32 md:right-8 lg:top-34 lg:right-12 xl:top-36 xl:right-16 z-50 max-w-sm component-options-panel">
       {isCollapsed ? (
-        /* Collapsed State - ToggleIcon Style */
         <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
           <button
             onClick={() => setIsCollapsed(false)}
@@ -51,25 +50,24 @@ export function ComponentOptions({
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = "rgba(43, 43, 43, 0.9)";
             }}
-            title="Expand options"
           >
             <ArrowLeftToLine size={16} color="white" strokeWidth={2} />
           </button>
         </Card>
       ) : (
-        /* Expanded State - Full Panel */
         <Card className="bg-[#fff9f9] backdrop-blur-md border-0 shadow-xl rounded-2xl overflow-hidden">
-          {/* Expanded State - Full Header */}
           <div className="p-4 border-b border-gray-200/50">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="text-lg font-bold text-gray-900">
+            <div className="flex items-center justify-between mb-0.5">
+              <h2
+                className="text-lg font-bold"
+                style={{ color: "rgb(43, 43, 43)" }}
+              >
                 {category.title}
               </h2>
               <div className="flex items-center gap-1">
                 <button
                   onClick={() => setIsCollapsed(true)}
                   className="text-gray-500 hover:text-gray-900 p-1 cursor-pointer transition-colors duration-200 rounded-md hover:bg-gray-200/80"
-                  title="Collapse options"
                 >
                   <ArrowRightToLine size={16} strokeWidth={2} />
                 </button>
@@ -95,8 +93,6 @@ export function ComponentOptions({
             </div>
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
-
-          {/* Expanded View - Show All Options */}
           <div className="max-h-96 overflow-y-auto">
             <div className="p-2 space-y-2">
               {category.options.map((option) => (
@@ -113,7 +109,6 @@ export function ComponentOptions({
                 >
                   <div className="p-3">
                     <div className="flex items-center gap-3">
-                      {/* Image Placeholder */}
                       <div className="w-12 h-12 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -140,10 +135,12 @@ export function ComponentOptions({
                         </svg>
                       </div>
 
-                      {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between mb-1">
-                          <h3 className="font-semibold text-gray-900 text-sm truncate">
+                          <h3
+                            className="font-semibold text-sm truncate"
+                            style={{ color: "rgb(43, 43, 43)" }}
+                          >
                             {option.name}
                           </h3>
                           <div className="flex items-center gap-2">
@@ -164,7 +161,6 @@ export function ComponentOptions({
                         </p>
                       </div>
 
-                      {/* Selection Indicator - Fixed width to prevent layout shift */}
                       <div className="w-5 h-5 flex-shrink-0">
                         {selectedOptionId === option.id && (
                           <div className="w-5 h-5 bg-[#b36868] rounded-full flex items-center justify-center">
@@ -187,7 +183,6 @@ export function ComponentOptions({
                     </div>
                   </div>
 
-                  {/* Hover Effect */}
                   {hoveredOption === option.id &&
                     selectedOptionId !== option.id && (
                       <div className="absolute inset-0 bg-[#b36868]/5 pointer-events-none" />
@@ -197,7 +192,6 @@ export function ComponentOptions({
             </div>
           </div>
 
-          {/* Footer */}
           <div className="p-4 border-t border-gray-200/50 bg-gray-50/30">
             <Button
               onClick={onClose}
