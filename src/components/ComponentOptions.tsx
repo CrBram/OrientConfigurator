@@ -42,7 +42,7 @@ export function ComponentOptions({
   return (
     <div className="fixed bottom-0 left-0 right-0 md:top-32 md:right-8 md:left-auto md:bottom-auto lg:top-34 lg:right-12 xl:top-36 xl:right-16 z-50 md:max-w-sm component-options-panel">
       {isCollapsed ? (
-        <div className="flex justify-end md:justify-start p-4 md:p-0">
+        <div className="flex flex-row md:flex-col justify-end md:justify-start gap-1 md:gap-2 p-4 md:p-0 w-full">
           <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
             <button
               onClick={() => setIsCollapsed(false)}
@@ -70,6 +70,36 @@ export function ComponentOptions({
                 strokeWidth={2}
                 className="hidden md:block"
               />
+            </button>
+          </Card>
+          <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
+            <button
+              onClick={onClose}
+              className="flex items-center justify-center w-8 h-8 rounded-[5rem] cursor-pointer transition-colors duration-200"
+              style={{
+                backgroundColor: "rgba(43, 43, 43, 0.9)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  "rgba(30, 30, 30, 0.95)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "rgba(43, 43, 43, 0.9)";
+              }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="white"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
             </button>
           </Card>
         </div>
@@ -122,7 +152,7 @@ export function ComponentOptions({
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
           <div className="max-h-48 md:max-h-96 overflow-y-auto">
-            <div className="p-1 md:p-2 space-y-2">
+            <div className="px-3 py-1 md:p-2 space-y-2">
               {category.options.map((option) => (
                 <div
                   key={option.id}
