@@ -5,7 +5,7 @@ export function Navigation() {
         <img src="/orient-seeklogo.png" alt="Orient" className="h-6 md:h-8" />
         <div>
           <p className="font-semibold text-xs text-secondary-foreground">
-            Made by <span className="text-accent">Bram C.</span>
+            <span className="text-accent">BC.</span>
           </p>
         </div>
       </div>
