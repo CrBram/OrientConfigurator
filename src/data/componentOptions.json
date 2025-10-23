@@ -1,0 +1,116 @@
+{
+  "face": {
+    "title": "Watch Face",
+    "description": "Choose your preferred dial design and color",
+    "options": [
+      {
+        "id": "blue-quartz",
+        "name": "Blue Quartz",
+        "description": "Classic blue dial with elegant finish",
+        "image": "/placeholder-face-blue.jpg",
+        "price": 0,
+        "isDefault": true
+      },
+      {
+        "id": "white-pearl",
+        "name": "White Pearl",
+        "description": "Luminous white pearl dial",
+        "image": "/placeholder-face-white.jpg",
+        "price": 25.0,
+        "isDefault": false
+      },
+      {
+        "id": "black-diamond",
+        "name": "Black Diamond",
+        "description": "Premium black dial with diamond indices",
+        "image": "/placeholder-face-black.jpg",
+        "price": 75.0,
+        "isDefault": false
+      },
+      {
+        "id": "rose-gold",
+        "name": "Rose Gold",
+        "description": "Luxurious rose gold dial",
+        "image": "/placeholder-face-rose.jpg",
+        "price": 125.0,
+        "isDefault": false
+      }
+    ]
+  },
+  "strap": {
+    "title": "Watch Strap",
+    "description": "Select the perfect strap for your style",
+    "options": [
+      {
+        "id": "stainless-steel",
+        "name": "Stainless Steel",
+        "description": "Classic stainless steel bracelet",
+        "image": "/placeholder-strap-steel.jpg",
+        "price": 0,
+        "isDefault": true
+      },
+      {
+        "id": "leather-brown",
+        "name": "Brown Leather",
+        "description": "Premium genuine leather strap",
+        "image": "/placeholder-strap-brown.jpg",
+        "price": 35.0,
+        "isDefault": false
+      },
+      {
+        "id": "leather-black",
+        "name": "Black Leather",
+        "description": "Sleek black leather strap",
+        "image": "/placeholder-strap-black.jpg",
+        "price": 35.0,
+        "isDefault": false
+      },
+      {
+        "id": "rubber-sport",
+        "name": "Sport Rubber",
+        "description": "Durable rubber strap for active lifestyle",
+        "image": "/placeholder-strap-rubber.jpg",
+        "price": 20.0,
+        "isDefault": false
+      },
+      {
+        "id": "mesh-silver",
+        "name": "Silver Mesh",
+        "description": "Modern mesh bracelet",
+        "image": "/placeholder-strap-mesh.jpg",
+        "price": 45.0,
+        "isDefault": false
+      }
+    ]
+  },
+  "knob": {
+    "title": "Crown",
+    "description": "Customize your watch crown",
+    "options": [
+      {
+        "id": "polished-steel",
+        "name": "Polished Steel",
+        "description": "Classic polished steel crown",
+        "image": "/placeholder-crown-steel.jpg",
+        "price": 0,
+        "isDefault": true
+      },
+      {
+        "id": "rose-gold-crown",
+        "name": "Rose Gold",
+        "description": "Elegant rose gold crown",
+        "image": "/placeholder-crown-rose.jpg",
+        "price": 30.0,
+        "isDefault": false
+      },
+      {
+        "id": "black-coated",
+        "name": "Black Coated",
+        "description": "Modern black-coated crown",
+        "image": "/placeholder-crown-black.jpg",
+        "price": 25.0,
+        "isDefault": false
+      }
+    ]
+  }
+}

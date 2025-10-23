@@ -6,20 +6,16 @@ import type { CameraView } from "./components/CameraControls";
 
 interface ShowcaseProps {
   cameraView: CameraView;
-  setCameraView: (view: CameraView) => void;
   showDescriptions: boolean;
+  onHotspotClick: (view: CameraView) => void;
 }
 
 const Showcase = ({
   cameraView,
-  setCameraView,
   showDescriptions,
+  onHotspotClick,
 }: ShowcaseProps) => {
   useCameraAnimation(cameraView);
-
-  const handleHotspotClick = (view: CameraView) => {
-    setCameraView(view);
-  };
 
   return (
     <>
@@ -43,7 +39,7 @@ const Showcase = ({
             targetPosition={[-1.2, 1.2, 0]}
             label="Face"
             componentName="Blue Quartz"
-            onClick={() => handleHotspotClick("face")}
+            onClick={() => onHotspotClick("face")}
             showDescriptions={showDescriptions}
           />
           <Hotspot
@@ -51,7 +47,7 @@ const Showcase = ({
             targetPosition={[0, 0.75, 1.8]}
             label="Strap"
             componentName="Stainless Steel"
-            onClick={() => handleHotspotClick("strap")}
+            onClick={() => onHotspotClick("strap")}
             showDescriptions={showDescriptions}
           />
           <Hotspot
@@ -59,7 +55,7 @@ const Showcase = ({
             targetPosition={[1.8, 1, 0.5]}
             label="Crown"
             componentName="Polished Steel"
-            onClick={() => handleHotspotClick("knob")}
+            onClick={() => onHotspotClick("knob")}
             showDescriptions={showDescriptions}
           />
         </>

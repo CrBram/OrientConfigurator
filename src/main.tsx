@@ -5,7 +5,12 @@ import { Canvas } from "@react-three/fiber";
 import Showcase from "./Showcase.tsx";
 import { Navigation } from "./components/Navigation.tsx";
 import { Footer } from "./components/Footer.tsx";
+import {
+  ComponentOptions,
+  type ComponentCategory,
+} from "./components/ComponentOptions.tsx";
 import type { CameraView } from "./components/CameraControls.tsx";
+import componentOptionsData from "./data/componentOptions.json";
 
 const cameraSettings = {
   fov: 45,
@@ -17,7 +22,35 @@ const cameraSettings = {
 function App() {
   const [cameraView, setCameraView] = useState<CameraView>("default");
   const [showDescriptions, setShowDescriptions] = useState(true);
-  const totalPrice = 499.99; // Default price for the watch
+  const [showComponentOptions, setShowComponentOptions] = useState(false);
+  const [currentComponentCategory, setCurrentComponentCategory] =
+    useState<ComponentCategory | null>(null);
+
+  // Component selection state
+  const [selectedComponents, setSelectedComponents] = useState({
+    face: "blue-quartz",
+    strap: "stainless-steel",
+    knob: "polished-steel",
+  });
+
+  const basePrice = 499.99;
+  const totalPrice = basePrice + calculateAdditionalPrice();
+
+  function calculateAdditionalPrice(): number {
+    let additionalPrice = 0;
+
+    // Add prices for selected components
+    Object.entries(selectedComponents).forEach(([category, optionId]) => {
+      const categoryData =
+        componentOptionsData[category as keyof typeof componentOptionsData];
+      const option = categoryData.options.find((opt) => opt.id === optionId);
+      if (option) {
+        additionalPrice += option.price;
+      }
+    });
+
+    return additionalPrice;
+  }
 
   const handleCheckout = () => {
     console.log("Checkout initiated for $", totalPrice);
@@ -25,6 +58,44 @@ function App() {
 
   const toggleDescriptions = () => {
     setShowDescriptions(!showDescriptions);
+  };
+
+  const handleHotspotClick = (view: CameraView) => {
+    setCameraView(view);
+
+    // Show component options for the clicked hotspot after animation delay
+    const categoryKey =
+      view === "face" ? "face" : view === "strap" ? "strap" : "knob";
+    const categoryData = componentOptionsData[categoryKey];
+    setCurrentComponentCategory(categoryData);
+
+    // Delay showing options to let camera animation play first
+    setTimeout(() => {
+      setShowComponentOptions(true);
+    }, 800); // 800ms delay to let camera animation complete
+  };
+
+  const handleOptionSelect = (optionId: string) => {
+    if (!currentComponentCategory) return;
+
+    const categoryKey = currentComponentCategory.title
+      .toLowerCase()
+      .includes("face")
+      ? "face"
+      : currentComponentCategory.title.toLowerCase().includes("strap")
+      ? "strap"
+      : "knob";
+
+    setSelectedComponents((prev) => ({
+      ...prev,
+      [categoryKey]: optionId,
+    }));
+  };
+
+  const handleCloseComponentOptions = () => {
+    setShowComponentOptions(false);
+    setCurrentComponentCategory(null);
+    setCameraView("default");
   };
 
   return (
@@ -58,34 +129,29 @@ function App() {
         >
           <Showcase
             cameraView={cameraView}
-            setCameraView={setCameraView}
             showDescriptions={showDescriptions}
+            onHotspotClick={handleHotspotClick}
           />
         </Canvas>
 
-        {/* Back button */}
-        {cameraView !== "default" && (
-          <div className="back-button-container" style={{ zIndex: 20 }}>
-            <button
-              className="back-button"
-              onClick={() => setCameraView("default")}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-              <span>Back</span>
-            </button>
-          </div>
+        {/* Component Options Panel */}
+        {showComponentOptions && currentComponentCategory && (
+          <ComponentOptions
+            category={currentComponentCategory}
+            selectedOptionId={
+              selectedComponents[
+                currentComponentCategory.title.toLowerCase().includes("face")
+                  ? "face"
+                  : currentComponentCategory.title
+                      .toLowerCase()
+                      .includes("strap")
+                  ? "strap"
+                  : "knob"
+              ]
+            }
+            onOptionSelect={handleOptionSelect}
+            onClose={handleCloseComponentOptions}
+          />
         )}
 
         {/* Footer */}

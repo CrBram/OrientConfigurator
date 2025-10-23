@@ -47,6 +47,22 @@ body,
   padding: 0;
 }
 
+/* Component Options Panel */
+.component-options-panel {
+  animation: slideInRight 0.3s ease-out;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Hotspot Styles */
 .hotspot-container {
   position: relative;
