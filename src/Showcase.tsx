@@ -37,18 +37,21 @@ const Showcase = ({ cameraView, setCameraView }: ShowcaseProps) => {
             position={[-0.2, 0.7, 0]}
             targetPosition={[-1.2, 1.2, 0]}
             label="Face"
+            componentName="Blue Quartz"
             onClick={() => handleHotspotClick("face")}
           />
           <Hotspot
             position={[0, 0.52, 1.8]}
             targetPosition={[0, 0.75, 1.8]}
             label="Strap"
+            componentName="Stainless Steel"
             onClick={() => handleHotspotClick("strap")}
           />
           <Hotspot
             position={[1.02, 0.7, 0]}
             targetPosition={[1.8, 1, 0.5]}
             label="Crown"
+            componentName="Polished Steel"
             onClick={() => handleHotspotClick("knob")}
           />
         </>

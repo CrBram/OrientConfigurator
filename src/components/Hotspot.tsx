@@ -7,6 +7,7 @@ interface HotspotProps {
   position: [number, number, number]; // Position on the watch
   targetPosition: [number, number, number]; // Where the circle appears
   label: string;
+  componentName: string; // Name of the selected component
   onClick: () => void;
 }
 
@@ -14,6 +15,7 @@ export function Hotspot({
   position,
   targetPosition,
   label,
+  componentName,
   onClick,
 }: HotspotProps) {
   const [hovered, setHovered] = useState(false);
@@ -52,8 +54,9 @@ export function Hotspot({
             <div className="hotspot-pulse" />
           </div>
           <div className={`hotspot-label ${hovered ? "visible" : ""}`}>
-            {label}
+            <div className="hotspot-label-title">{label}</div>
           </div>
+          <div className="hotspot-component-name">{componentName}</div>
         </div>
       </Html>
     </group>

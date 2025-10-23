@@ -21,7 +21,6 @@ function App() {
       <Navigation />
 
       <div className="flex-1 relative" style={{ background: "#ededed" }}>
-        {/* Title overlay */}
         <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-16 xl:left-16 pointer-events-none z-0">
           <h1
             className="text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight select-none"
