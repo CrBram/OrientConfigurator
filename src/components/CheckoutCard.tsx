@@ -8,7 +8,7 @@ interface CheckoutCardProps {
 
 export function CheckoutCard({ totalPrice, onCheckout }: CheckoutCardProps) {
   return (
-    <Card className="bg-white/90 backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1.5 px-1.5">
+    <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1.5 px-1.5">
       <div className="flex items-center gap-4">
         <div className="flex flex-col pl-4 pr-4">
           <span className="text-xs uppercase tracking-wide text-right mb-[-0.4rem] font-semibold text-accent">

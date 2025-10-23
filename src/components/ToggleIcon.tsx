@@ -8,7 +8,7 @@ interface ToggleIconProps {
 
 export function ToggleIcon({ isEnabled, onToggle }: ToggleIconProps) {
   return (
-    <Card className="bg-white/90 backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
+    <Card className="bg-[#fff9f9] backdrop-blur-sm border-gray-200 shadow-lg rounded-[5rem] py-1 px-1">
       <button
         onClick={onToggle}
         className="flex items-center justify-center w-8 h-8 rounded-[5rem] cursor-pointer transition-colors duration-200"
