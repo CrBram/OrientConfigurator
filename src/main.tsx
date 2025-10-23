@@ -29,7 +29,7 @@ function App() {
           >
             <span className="font-light">Orient</span>
             <br />
-            Bambino
+            <span className="text-[#b36868]">Bambino</span>
           </h1>
         </div>
 
