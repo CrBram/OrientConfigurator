@@ -12,7 +12,7 @@ export interface ComponentOption {
   id: string;
   name: string;
   description: string;
-  image: string;
+  image?: string;
   price: number;
   isDefault: boolean;
 }
