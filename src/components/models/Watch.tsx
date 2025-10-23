@@ -27,7 +27,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
 
   // Animation state for crowns
   const [crownAnimationState, setCrownAnimationState] = useState({
-    firstCrown: { phase: "hidden", progress: 0 }, // 'hidden', 'fading', 'sliding', 'visible', 'slidingOut', 'fadingOut'
+    firstCrown: { phase: "hidden", progress: 0 }, // 'hidden', 'sliding', 'visible', 'slidingOut'
     secondCrown: { phase: "hidden", progress: 0 },
   });
 
@@ -86,7 +86,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
   // Animate crown visibility based on selected knob type
   useFrame((_, delta) => {
     const knobType = selectedComponents.knob;
-    const fadeDuration = 0; // Duration for fade in/out phase
     const slideDuration = 0.5; // Duration for slide phase
 
     // First crown: shows for double-crown and triple-crown
@@ -95,10 +94,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
       const currentState = crownAnimationState.firstCrown;
 
       if (shouldShow && currentState.phase === "hidden") {
-        // Start fade in
+        // Start sliding in
         setCrownAnimationState((prev) => ({
           ...prev,
-          firstCrown: { phase: "fading", progress: 0 },
+          firstCrown: { phase: "sliding", progress: 0 },
         }));
       } else if (!shouldShow && currentState.phase === "visible") {
         // Start slide out (reverse animation)
@@ -106,30 +105,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           ...prev,
           firstCrown: { phase: "slidingOut", progress: 0 },
         }));
-      }
-
-      // Handle fade phase
-      if (currentState.phase === "fading") {
-        const newProgress = Math.min(
-          currentState.progress + delta / fadeDuration,
-          1
-        );
-        const scale = newProgress * 0.4;
-
-        firstCrownRef.current.scale.setScalar(scale);
-
-        if (newProgress >= 1) {
-          // Fade complete, start sliding
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "sliding", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "fading", progress: newProgress },
-          }));
-        }
       }
 
       // Handle slide phase
@@ -143,6 +118,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         const currentX = startX + (endX - startX) * newProgress;
 
         firstCrownRef.current.position.set(currentX, 0.184, -0.06);
+        firstCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
           // Slide complete
@@ -169,33 +145,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         const currentX = startX + (endX - startX) * newProgress;
 
         firstCrownRef.current.position.set(currentX, 0.184, -0.06);
+        firstCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide out complete, start fade out
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "fadingOut", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "slidingOut", progress: newProgress },
-          }));
-        }
-      }
-
-      // Handle fade out phase (reverse animation)
-      if (currentState.phase === "fadingOut") {
-        const newProgress = Math.min(
-          currentState.progress + delta / fadeDuration,
-          1
-        );
-        const scale = (1 - newProgress) * 0.4; // Reverse scale animation
-
-        firstCrownRef.current.scale.setScalar(scale);
-
-        if (newProgress >= 1) {
-          // Fade out complete, go to hidden
+          // Slide out complete, go to hidden
           setCrownAnimationState((prev) => ({
             ...prev,
             firstCrown: { phase: "hidden", progress: 0 },
@@ -203,7 +156,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         } else {
           setCrownAnimationState((prev) => ({
             ...prev,
-            firstCrown: { phase: "fadingOut", progress: newProgress },
+            firstCrown: { phase: "slidingOut", progress: newProgress },
           }));
         }
       }
@@ -227,10 +180,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
       const currentState = crownAnimationState.secondCrown;
 
       if (shouldShow && currentState.phase === "hidden") {
-        // Start fade in
+        // Start sliding in
         setCrownAnimationState((prev) => ({
           ...prev,
-          secondCrown: { phase: "fading", progress: 0 },
+          secondCrown: { phase: "sliding", progress: 0 },
         }));
       } else if (!shouldShow && currentState.phase === "visible") {
         // Start slide out (reverse animation)
@@ -238,30 +191,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           ...prev,
           secondCrown: { phase: "slidingOut", progress: 0 },
         }));
-      }
-
-      // Handle fade phase
-      if (currentState.phase === "fading") {
-        const newProgress = Math.min(
-          currentState.progress + delta / fadeDuration,
-          1
-        );
-        const scale = newProgress * 0.4;
-
-        secondCrownRef.current.scale.setScalar(scale);
-
-        if (newProgress >= 1) {
-          // Fade complete, start sliding
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "sliding", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "fading", progress: newProgress },
-          }));
-        }
       }
 
       // Handle slide phase
@@ -275,6 +204,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         const currentX = startX + (endX - startX) * newProgress;
 
         secondCrownRef.current.position.set(currentX, 0.184, 0.14);
+        secondCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
           // Slide complete
@@ -301,33 +231,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         const currentX = startX + (endX - startX) * newProgress;
 
         secondCrownRef.current.position.set(currentX, 0.184, 0.14);
+        secondCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide out complete, start fade out
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "fadingOut", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "slidingOut", progress: newProgress },
-          }));
-        }
-      }
-
-      // Handle fade out phase (reverse animation)
-      if (currentState.phase === "fadingOut") {
-        const newProgress = Math.min(
-          currentState.progress + delta / fadeDuration,
-          1
-        );
-        const scale = (1 - newProgress) * 0.4; // Reverse scale animation
-
-        secondCrownRef.current.scale.setScalar(scale);
-
-        if (newProgress >= 1) {
-          // Fade out complete, go to hidden
+          // Slide out complete, go to hidden
           setCrownAnimationState((prev) => ({
             ...prev,
             secondCrown: { phase: "hidden", progress: 0 },
@@ -335,7 +242,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         } else {
           setCrownAnimationState((prev) => ({
             ...prev,
-            secondCrown: { phase: "fadingOut", progress: newProgress },
+            secondCrown: { phase: "slidingOut", progress: newProgress },
           }));
         }
       }
