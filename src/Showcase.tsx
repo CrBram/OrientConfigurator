@@ -3,6 +3,7 @@ import { Watch } from "./components/models/Watch";
 import { Hotspot } from "./components/Hotspot";
 import { useCameraAnimation } from "./components/CameraControls";
 import type { CameraView } from "./components/CameraControls";
+import { useIsMobile } from "./hooks/useIsMobile";
 
 interface ShowcaseProps {
   cameraView: CameraView;
@@ -16,14 +17,15 @@ const Showcase = ({
   onHotspotClick,
 }: ShowcaseProps) => {
   useCameraAnimation(cameraView);
+  const isMobile = useIsMobile();
 
   return (
     <>
       <OrbitControls
         makeDefault
         enablePan={false}
-        minDistance={3}
-        maxDistance={8}
+        minDistance={isMobile ? 2.5 : 3}
+        maxDistance={isMobile ? 10 : 8}
         target={[0, 0, 0]}
       />
       <Environment preset="sunset" />
