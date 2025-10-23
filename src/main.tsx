@@ -17,7 +17,7 @@ function App() {
   const [cameraView, setCameraView] = useState<CameraView>("default");
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen mx-auto w-full max-w-[1920px]">
       <Navigation />
 
       <div className="flex-1 relative" style={{ background: "#ededed" }}>
