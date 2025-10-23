@@ -4,20 +4,35 @@ import { Hotspot } from "./components/Hotspot";
 import { useCameraAnimation } from "./components/CameraControls";
 import type { CameraView } from "./components/CameraControls";
 import { useIsMobile } from "./hooks/useIsMobile";
+import componentOptionsData from "./data/componentOptions.json";
 
 interface ShowcaseProps {
   cameraView: CameraView;
   showDescriptions: boolean;
   onHotspotClick: (view: CameraView) => void;
+  selectedComponents: {
+    face: string;
+    strap: string;
+    knob: string;
+  };
 }
 
 const Showcase = ({
   cameraView,
   showDescriptions,
   onHotspotClick,
+  selectedComponents,
 }: ShowcaseProps) => {
   useCameraAnimation(cameraView);
   const isMobile = useIsMobile();
+
+  // Helper function to get component name by category and option ID
+  const getComponentName = (category: string, optionId: string): string => {
+    const categoryData =
+      componentOptionsData[category as keyof typeof componentOptionsData];
+    const option = categoryData?.options.find((opt) => opt.id === optionId);
+    return option?.name || "Unknown";
+  };
 
   return (
     <>
@@ -32,7 +47,7 @@ const Showcase = ({
       <directionalLight position={[5, 5, 5]} intensity={0.5} castShadow />
       <directionalLight position={[-3, 2, 1]} intensity={0.5} color="#ffa500" />
 
-      <Watch />
+      <Watch selectedComponents={selectedComponents} />
 
       {cameraView === "default" && (
         <>
@@ -40,7 +55,7 @@ const Showcase = ({
             position={[-0.2, 0.7, 0]}
             targetPosition={[-1.2, 1.2, 0]}
             label="Face"
-            componentName="Blue Quartz"
+            componentName={getComponentName("face", selectedComponents.face)}
             onClick={() => onHotspotClick("face")}
             showDescriptions={showDescriptions}
           />
@@ -48,7 +63,7 @@ const Showcase = ({
             position={[0, 0.52, 1.8]}
             targetPosition={[0, 0.75, 1.8]}
             label="Strap"
-            componentName="Stainless Steel"
+            componentName={getComponentName("strap", selectedComponents.strap)}
             onClick={() => onHotspotClick("strap")}
             showDescriptions={showDescriptions}
           />
@@ -56,7 +71,7 @@ const Showcase = ({
             position={[1.02, 0.7, 0]}
             targetPosition={[1.8, 1, 0.5]}
             label="Crown"
-            componentName="Polished Steel"
+            componentName={getComponentName("knob", selectedComponents.knob)}
             onClick={() => onHotspotClick("knob")}
             showDescriptions={showDescriptions}
           />

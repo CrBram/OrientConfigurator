@@ -88,27 +88,27 @@
     "description": "Customize your watch crown",
     "options": [
       {
-        "id": "polished-steel",
-        "name": "Polished Steel",
-        "description": "Classic polished steel crown",
+        "id": "single-crown",
+        "name": "Single Crown",
+        "description": "Classic single crown design",
         "image": "/placeholder-crown-steel.jpg",
         "price": 0,
         "isDefault": true
       },
       {
-        "id": "rose-gold-crown",
-        "name": "Rose Gold",
-        "description": "Elegant rose gold crown",
-        "image": "/placeholder-crown-rose.jpg",
+        "id": "double-crown",
+        "name": "Double Crown",
+        "description": "Modern double crown design",
+        "image": "/placeholder-crown-black.jpg",
         "price": 30.0,
         "isDefault": false
       },
       {
-        "id": "black-coated",
-        "name": "Black Coated",
-        "description": "Modern black-coated crown",
-        "image": "/placeholder-crown-black.jpg",
-        "price": 25.0,
+        "id": "triple-crown",
+        "name": "Triple Crown",
+        "description": "Elegant triple crown design",
+        "image": "/placeholder-crown-rose.jpg",
+        "price": 45.0,
         "isDefault": false
       }
     ]

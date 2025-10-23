@@ -30,7 +30,7 @@ function App() {
   const [selectedComponents, setSelectedComponents] = useState({
     face: "blue-quartz",
     strap: "stainless-steel",
-    knob: "polished-steel",
+    knob: "single-crown",
   });
 
   const basePrice = 499.99;
@@ -131,6 +131,7 @@ function App() {
             cameraView={cameraView}
             showDescriptions={showDescriptions}
             onHotspotClick={handleHotspotClick}
+            selectedComponents={selectedComponents}
           />
         </Canvas>
 
