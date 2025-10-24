@@ -9,7 +9,8 @@
         "description": "Classic blue dial with elegant finish",
         "price": 0,
         "isDefault": true,
-        "color": "#1e3a8a"
+        "color": "#1e3a8a",
+        "image": "/components/dial_colors/blue.png"
       },
       {
         "id": "black-diamond",
@@ -17,7 +18,8 @@
         "description": "Premium black dial",
         "price": 50.0,
         "isDefault": false,
-        "color": "#0f172a"
+        "color": "#0f172a",
+        "image": "/components/dial_colors/black.png"
       },
       {
         "id": "cream-pearl",
@@ -25,7 +27,8 @@
         "description": "Classy creamy pearl dial",
         "price": 50.0,
         "isDefault": false,
-        "color": "#734128"
+        "color": "#734128",
+        "image": "/components/dial_colors/brown.png"
       },
       {
         "id": "ruby-red",
@@ -33,7 +36,8 @@
         "description": "Premium ruby red dial",
         "price": 75.0,
         "isDefault": false,
-        "color": "#9B111E"
+        "color": "#9B111E",
+        "image": "/components/dial_colors/red.png"
       },
       {
         "id": "rose-gold",
@@ -41,7 +45,8 @@
         "description": "Luxurious rose gold dial",
         "price": 125.0,
         "isDefault": false,
-        "color": "#B76E79"
+        "color": "#B76E79",
+        "image": "/components/dial_colors/pink.png"
       },
       {
         "id": "emerald-green",
@@ -49,7 +54,8 @@
         "description": "Luxurious emerald green dial",
         "price": 125.0,
         "isDefault": false,
-        "color": "#00674F"
+        "color": "#00674F",
+        "image": "/components/dial_colors/green.png"
       }
     ]
   },
