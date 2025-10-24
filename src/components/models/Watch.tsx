@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { SmallCrown } from "./SmallCrown";
+import componentOptionsData from "../../data/componentOptions.json";
 
 interface WatchProps {
   selectedComponents: {
@@ -49,6 +50,34 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
       side: THREE.DoubleSide,
     });
   }, []);
+
+  const faceMaterial = useMemo(() => {
+    const baseMaterial = materials.Face.clone();
+
+    const faceOption = (componentOptionsData as any).face.options.find(
+      (option: any) => option.id === selectedComponents.face
+    );
+
+    if (faceOption?.color) {
+      baseMaterial.color.setHex(
+        parseInt(faceOption.color.replace("#", ""), 16)
+      );
+    } else {
+      console.log("No color found for face option:", selectedComponents.face);
+    }
+
+    return baseMaterial;
+  }, [materials.Face, selectedComponents.face]);
+
+  // Determine which material to use for the dial based on whether it's the default option
+  const dialMaterial = useMemo(() => {
+    const faceOption = (componentOptionsData as any).face.options.find(
+      (option: any) => option.id === selectedComponents.face
+    );
+
+    // Use original material for default option, custom material for others
+    return faceOption?.isDefault ? materials.Material : faceMaterial;
+  }, [materials.Material, faceMaterial, selectedComponents.face]);
 
   // Animate watch hands based on current time
   useFrame(() => {
@@ -515,7 +544,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
             castShadow
             receiveShadow
             geometry={nodes.Cylinder004.geometry}
-            material={materials.Material}
+            material={dialMaterial}
           />
           <mesh
             castShadow

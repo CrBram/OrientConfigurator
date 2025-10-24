@@ -53,7 +53,7 @@ function App() {
   }
 
   const handleCheckout = () => {
-    console.log("Checkout initiated for $", totalPrice);
+    console.log("Checkout initiated for €", totalPrice);
   };
 
   const toggleDescriptions = () => {
@@ -78,13 +78,13 @@ function App() {
   const handleOptionSelect = (optionId: string) => {
     if (!currentComponentCategory) return;
 
-    const categoryKey = currentComponentCategory.title
-      .toLowerCase()
-      .includes("face")
-      ? "face"
-      : currentComponentCategory.title.toLowerCase().includes("strap")
-      ? "strap"
-      : "knob";
+    const categoryKey =
+      currentComponentCategory.title.toLowerCase().includes("dial") ||
+      currentComponentCategory.title.toLowerCase().includes("face")
+        ? "face"
+        : currentComponentCategory.title.toLowerCase().includes("strap")
+        ? "strap"
+        : "knob";
 
     setSelectedComponents((prev) => ({
       ...prev,
@@ -141,6 +141,7 @@ function App() {
             category={currentComponentCategory}
             selectedOptionId={
               selectedComponents[
+                currentComponentCategory.title.toLowerCase().includes("dial") ||
                 currentComponentCategory.title.toLowerCase().includes("face")
                   ? "face"
                   : currentComponentCategory.title

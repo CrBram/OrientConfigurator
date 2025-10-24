@@ -1,35 +1,55 @@
 {
   "face": {
-    "title": "Watch Face",
-    "description": "Choose your preferred dial design and color",
+    "title": "Dial Color",
+    "description": "Choose your preferred dial color",
     "options": [
       {
         "id": "blue-quartz",
         "name": "Blue Quartz",
         "description": "Classic blue dial with elegant finish",
         "price": 0,
-        "isDefault": true
-      },
-      {
-        "id": "white-pearl",
-        "name": "White Pearl",
-        "description": "Luminous white pearl dial",
-        "price": 25.0,
-        "isDefault": false
+        "isDefault": true,
+        "color": "#1e3a8a"
       },
       {
         "id": "black-diamond",
         "name": "Black Diamond",
-        "description": "Premium black dial with diamond indices",
+        "description": "Premium black dial",
+        "price": 50.0,
+        "isDefault": false,
+        "color": "#0f172a"
+      },
+      {
+        "id": "cream-pearl",
+        "name": "Creamy Pearl",
+        "description": "Classy creamy pearl dial",
+        "price": 50.0,
+        "isDefault": false,
+        "color": "#734128"
+      },
+      {
+        "id": "ruby-red",
+        "name": "Ruby Red",
+        "description": "Premium ruby red dial",
         "price": 75.0,
-        "isDefault": false
+        "isDefault": false,
+        "color": "#9B111E"
       },
       {
         "id": "rose-gold",
         "name": "Rose Gold",
         "description": "Luxurious rose gold dial",
         "price": 125.0,
-        "isDefault": false
+        "isDefault": false,
+        "color": "#B76E79"
+      },
+      {
+        "id": "emerald-green",
+        "name": "Emerald Green",
+        "description": "Luxurious emerald green dial",
+        "price": 125.0,
+        "isDefault": false,
+        "color": "#00674F"
       }
     ]
   },

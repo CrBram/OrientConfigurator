@@ -15,6 +15,7 @@ export interface ComponentOption {
   image?: string;
   price: number;
   isDefault: boolean;
+  color?: string;
 }
 
 export interface ComponentCategory {
@@ -217,7 +218,7 @@ export function ComponentOptions({
                             )}
                             {option.price > 0 && (
                               <span className="text-[#b36868] font-semibold text-sm">
-                                +${option.price.toFixed(0)}
+                                +€{option.price.toFixed(0)}
                               </span>
                             )}
                           </div>
