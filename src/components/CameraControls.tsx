@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 
-export type CameraView = "default" | "face" | "strap" | "knob";
+export type CameraView = "default" | "face" | "strap" | "knob" | "indicators";
 
 interface CameraPosition {
   position: [number, number, number];
@@ -26,6 +26,10 @@ const cameraViews: Record<CameraView, CameraPosition> = {
   knob: {
     position: [2, 0.5, 1],
     target: [0.8, 0.5, 0],
+  },
+  indicators: {
+    position: [0, 3, 0.2],
+    target: [0, 0.5, 0],
   },
 };
 

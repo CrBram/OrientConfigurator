@@ -4,12 +4,14 @@ import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 import { SmallCrown } from "./SmallCrown";
 import componentOptionsData from "../../data/componentOptions.json";
+import { ClassicIndicators } from "./ClassicIndicators";
 
 interface WatchProps {
   selectedComponents: {
     face: string;
     strap: string;
     knob: string;
+    indicators: string;
   };
   [key: string]: any;
 }
@@ -293,112 +295,117 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
   return (
     <group {...props} dispose={null}>
       <group position={[-0.003, 0.2, -0.049]} scale={2.565}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["1"].geometry}
-          material={materials.Letters}
-          position={[0.125, 0.191, -0.233]}
-          rotation={[0, -Math.PI / 6, 0]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["10"].geometry}
-          material={materials.Letters}
-          position={[-0.225, 0.191, -0.142]}
-          rotation={[0, Math.PI / 3, 0]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["11"].geometry}
-          material={materials.Letters}
-          position={[-0.128, 0.191, -0.233]}
-          rotation={[0, Math.PI / 6, 0]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["12"].geometry}
-          material={materials.Letters}
-          position={[-0.003, 0.191, -0.266]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["2"].geometry}
-          material={materials.Letters}
-          position={[0.222, 0.191, -0.143]}
-          rotation={[0, -Math.PI / 3, 0]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["3"].geometry}
-          material={materials.Letters}
-          position={[0.265, 0.191, -0.015]}
-          rotation={[0, -Math.PI / 2, 0]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["4"].geometry}
-          material={materials.Letters}
-          position={[0.236, 0.191, 0.121]}
-          rotation={[Math.PI, -Math.PI / 3, Math.PI]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["5"].geometry}
-          material={materials.Letters}
-          position={[0.14, 0.191, 0.226]}
-          rotation={[Math.PI, -Math.PI / 6, Math.PI]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["6"].geometry}
-          material={materials.Letters}
-          position={[-0.002, 0.191, 0.266]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["7"].geometry}
-          material={materials.Letters}
-          position={[-0.138, 0.191, 0.228]}
-          rotation={[-Math.PI, Math.PI / 6, -Math.PI]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["8"].geometry}
-          material={materials.Letters}
-          position={[-0.236, 0.191, 0.124]}
-          rotation={[-Math.PI, Math.PI / 3, -Math.PI]}
-          scale={0.39}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes["9"].geometry}
-          material={materials.Letters}
-          position={[-0.265, 0.191, -0.015]}
-          rotation={[0, Math.PI / 2, 0]}
-          scale={0.39}
-        />
+        {/* Roman Numerals - visible when roman-indicators is selected */}
+        {selectedComponents.indicators === "roman-indicators" && (
+          <>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["1"].geometry}
+              material={materials.Letters}
+              position={[0.125, 0.191, -0.233]}
+              rotation={[0, -Math.PI / 6, 0]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["10"].geometry}
+              material={materials.Letters}
+              position={[-0.225, 0.191, -0.142]}
+              rotation={[0, Math.PI / 3, 0]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["11"].geometry}
+              material={materials.Letters}
+              position={[-0.128, 0.191, -0.233]}
+              rotation={[0, Math.PI / 6, 0]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["12"].geometry}
+              material={materials.Letters}
+              position={[-0.003, 0.191, -0.266]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["2"].geometry}
+              material={materials.Letters}
+              position={[0.222, 0.191, -0.143]}
+              rotation={[0, -Math.PI / 3, 0]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["3"].geometry}
+              material={materials.Letters}
+              position={[0.265, 0.191, -0.015]}
+              rotation={[0, -Math.PI / 2, 0]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["4"].geometry}
+              material={materials.Letters}
+              position={[0.236, 0.191, 0.121]}
+              rotation={[Math.PI, -Math.PI / 3, Math.PI]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["5"].geometry}
+              material={materials.Letters}
+              position={[0.14, 0.191, 0.226]}
+              rotation={[Math.PI, -Math.PI / 6, Math.PI]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["6"].geometry}
+              material={materials.Letters}
+              position={[-0.002, 0.191, 0.266]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["7"].geometry}
+              material={materials.Letters}
+              position={[-0.138, 0.191, 0.228]}
+              rotation={[-Math.PI, Math.PI / 6, -Math.PI]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["8"].geometry}
+              material={materials.Letters}
+              position={[-0.236, 0.191, 0.124]}
+              rotation={[-Math.PI, Math.PI / 3, -Math.PI]}
+              scale={0.39}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes["9"].geometry}
+              material={materials.Letters}
+              position={[-0.265, 0.191, -0.015]}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={0.39}
+            />
+          </>
+        )}
         <mesh
           castShadow
           receiveShadow
@@ -407,6 +414,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[-0.002, 0.192, -0.115]}
           scale={0.055}
         />
+        {/* Classic Indicators - visible when classic-indicators is selected */}
+        {selectedComponents.indicators === "classic-indicators" && (
+          <ClassicIndicators position={[0, 0.184, 0.02]} scale={0.389} />
+        )}
         {/* Second hand group - rotates around watch center */}
         <group ref={secondHandGroupRef} position={[0, 0.199, 0]}>
           <mesh

@@ -31,6 +31,7 @@ function App() {
     face: "blue-quartz",
     strap: "stainless-steel",
     knob: "single-crown",
+    indicators: "roman-indicators",
   });
 
   const basePrice = 499.99;
@@ -65,7 +66,13 @@ function App() {
 
     // Show component options for the clicked hotspot after animation delay
     const categoryKey =
-      view === "face" ? "face" : view === "strap" ? "strap" : "knob";
+      view === "face"
+        ? "face"
+        : view === "strap"
+        ? "strap"
+        : view === "knob"
+        ? "knob"
+        : "indicators";
     const categoryData = componentOptionsData[categoryKey];
     setCurrentComponentCategory(categoryData);
 
@@ -84,6 +91,8 @@ function App() {
         ? "face"
         : currentComponentCategory.title.toLowerCase().includes("strap")
         ? "strap"
+        : currentComponentCategory.title.toLowerCase().includes("indicator")
+        ? "indicators"
         : "knob";
 
     setSelectedComponents((prev) => ({
@@ -148,6 +157,10 @@ function App() {
                       .toLowerCase()
                       .includes("strap")
                   ? "strap"
+                  : currentComponentCategory.title
+                      .toLowerCase()
+                      .includes("indicator")
+                  ? "indicators"
                   : "knob"
               ]
             }

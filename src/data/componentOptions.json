@@ -129,5 +129,27 @@
         "isDefault": false
       }
     ]
+  },
+  "indicators": {
+    "title": "Indicators",
+    "description": "Customize your watch indicators",
+    "options": [
+      {
+        "id": "roman-indicators",
+        "name": "Roman Indicators",
+        "description": "Stylish Roman indicators",
+        "image": "/components/numbers/orient_roman.png",
+        "price": 0,
+        "isDefault": true
+      },
+      {
+        "id": "classic-indicators",
+        "name": "Classic Indicators",
+        "description": "Minimalistic indicators design",
+        "image": "/components/numbers/orient_classic.png",
+        "price": 0,
+        "isDefault": false
+      }
+    ]
   }
 }

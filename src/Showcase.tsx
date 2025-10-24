@@ -14,6 +14,7 @@ interface ShowcaseProps {
     face: string;
     strap: string;
     knob: string;
+    indicators: string;
   };
 }
 
@@ -70,6 +71,16 @@ const Showcase = ({
             targetPosition={[1.8, 1, 0.5]}
             componentName={getComponentName("knob", selectedComponents.knob)}
             onClick={() => onHotspotClick("knob")}
+            showDescriptions={showDescriptions}
+          />
+          <Hotspot
+            position={[-0.38, 0.7, -0.7]}
+            targetPosition={[0, 1.4, -1]}
+            componentName={getComponentName(
+              "indicators",
+              selectedComponents.indicators
+            )}
+            onClick={() => onHotspotClick("indicators")}
             showDescriptions={showDescriptions}
           />
         </>
