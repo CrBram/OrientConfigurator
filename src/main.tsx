@@ -32,6 +32,7 @@ function App() {
     strap: "stainless-steel",
     knob: "single-crown",
     indicators: "roman-indicators",
+    dialCase: "standard-case",
   });
 
   const basePrice = 499.99;
@@ -166,6 +167,13 @@ function App() {
             }
             onOptionSelect={handleOptionSelect}
             onClose={handleCloseComponentOptions}
+            selectedDialCase={selectedComponents.dialCase}
+            onDialCaseSelect={(dialCaseId) => {
+              setSelectedComponents((prev) => ({
+                ...prev,
+                dialCase: dialCaseId,
+              }));
+            }}
           />
         )}
 

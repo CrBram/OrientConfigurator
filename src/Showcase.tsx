@@ -15,6 +15,7 @@ interface ShowcaseProps {
     strap: string;
     knob: string;
     indicators: string;
+    dialCase: string;
   };
 }
 

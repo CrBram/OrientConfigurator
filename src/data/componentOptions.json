@@ -1,7 +1,7 @@
 {
   "face": {
-    "title": "Dial Color",
-    "description": "Choose your preferred dial color",
+    "title": "Dial",
+    "description": "Customize your dial color and case size",
     "options": [
       {
         "id": "blue-quartz",
@@ -56,6 +56,26 @@
         "isDefault": false,
         "color": "#00674F",
         "image": "/components/dial_colors/green.png"
+      }
+    ]
+  },
+  "dialCase": {
+    "title": "Dial Case Size",
+    "description": "Choose your preferred dial case size",
+    "options": [
+      {
+        "id": "standard-case",
+        "name": "Standard Case",
+        "description": "Classic standard dial case",
+        "price": 0,
+        "isDefault": true
+      },
+      {
+        "id": "thin-case",
+        "name": "Thin Case",
+        "description": "Elegant thin dial case",
+        "price": 25.0,
+        "isDefault": false
       }
     ]
   },

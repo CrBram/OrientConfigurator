@@ -13,6 +13,7 @@ interface WatchProps {
     strap: string;
     knob: string;
     indicators: string;
+    dialCase: string;
   };
   [key: string]: any;
 }
@@ -565,15 +566,19 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
             material={materials.orient_logo_white}
           />
         </group>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.WatchFace.geometry}
-          material={materials.Face}
-          position={[0, 0.173, -0.001]}
-          scale={0.39}
-        />
-        {/* <ThinFace position={[0.0048, 0.184, 0.007]} scale={0.3865} /> */}
+        {selectedComponents.dialCase === "standard-case" && (
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.WatchFace.geometry}
+            material={materials.Face}
+            position={[0, 0.173, -0.001]}
+            scale={0.39}
+          />
+        )}
+        {selectedComponents.dialCase === "thin-case" && (
+          <ThinFace position={[0.0048, 0.184, 0.007]} scale={0.3865} />
+        )}
         <mesh
           castShadow
           receiveShadow
