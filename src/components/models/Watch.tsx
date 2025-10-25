@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { SmallCrown } from "./SmallCrown";
 import componentOptionsData from "../../data/componentOptions.json";
 import { ClassicIndicators } from "./ClassicIndicators";
+import { ThinFace } from "./ThinFace";
 
 interface WatchProps {
   selectedComponents: {
@@ -572,6 +573,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[0, 0.173, -0.001]}
           scale={0.39}
         />
+        {/* <ThinFace position={[0.0048, 0.184, 0.007]} scale={0.3865} /> */}
         <mesh
           castShadow
           receiveShadow
