@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import {
@@ -44,6 +44,56 @@ export function ComponentOptions({
 }: ComponentOptionsProps) {
   const [hoveredOption, setHoveredOption] = useState<string | null>(null);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showStickyTitle, setShowStickyTitle] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const caseSizeSectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    const caseSizeSection = caseSizeSectionRef.current;
+
+    if (!scrollContainer || !caseSizeSection) return;
+
+    const handleScroll = () => {
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const sectionRect = caseSizeSection.getBoundingClientRect();
+
+      // Check if the case size section is visible in the scroll container
+      const isSectionVisible =
+        sectionRect.top <= containerRect.bottom &&
+        sectionRect.bottom >= containerRect.top;
+
+      setShowStickyTitle(!isSectionVisible);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      scrollContainer.removeEventListener("scroll", handleScroll);
+    };
+  }, [category.title, selectedDialCase, onDialCaseSelect]);
+
+  const scrollToCaseSize = () => {
+    const caseSizeSection = caseSizeSectionRef.current;
+    const scrollContainer = scrollContainerRef.current;
+
+    if (caseSizeSection && scrollContainer) {
+      const containerRect = scrollContainer.getBoundingClientRect();
+      const sectionRect = caseSizeSection.getBoundingClientRect();
+
+      // Calculate the scroll position to center the section
+      const scrollTop =
+        scrollContainer.scrollTop + (sectionRect.top - containerRect.top);
+
+      scrollContainer.scrollTo({
+        top: scrollTop,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <div className="fixed bottom-0 left-0 right-0 md:top-32 md:right-8 md:left-auto md:bottom-auto lg:top-34 lg:right-12 xl:top-36 xl:right-16 z-50 md:max-w-sm component-options-panel">
@@ -157,7 +207,11 @@ export function ComponentOptions({
             </div>
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
-          <div className="max-h-48 md:max-h-96 overflow-y-auto">
+          {/* Scrollable content area */}
+          <div
+            ref={scrollContainerRef}
+            className="max-h-48 md:max-h-96 overflow-y-auto"
+          >
             <div className="px-3 py-1 md:p-2 space-y-2">
               {/* Dial Color Options */}
               {category.title === "Dial" && (
@@ -268,12 +322,13 @@ export function ComponentOptions({
                 </div>
               ))}
 
+              {/* Case Size Options - Scrollable */}
               {category.title === "Dial" &&
                 selectedDialCase &&
                 onDialCaseSelect && (
                   <>
                     <div className="border-t border-gray-200/50 my-3"></div>
-                    <div className="px-2">
+                    <div ref={caseSizeSectionRef} className="px-2">
                       <h3 className="text-sm font-semibold text-gray-700 mb-3">
                         Case Size
                       </h3>
@@ -364,6 +419,21 @@ export function ComponentOptions({
                 )}
             </div>
           </div>
+
+          {/* Sticky Case Size Title - Only shows when scrolling */}
+          {category.title === "Dial" &&
+            selectedDialCase &&
+            onDialCaseSelect &&
+            showStickyTitle && (
+              <div className="px-3 py-2 bg-[#fff9f9] sticky bottom-0 z-10 border-t border-gray-200/50">
+                <button
+                  onClick={scrollToCaseSize}
+                  className="px-2 text-sm font-semibold text-gray-700 hover:text-[#b36868] transition-colors duration-200 cursor-pointer"
+                >
+                  Case Size
+                </button>
+              </div>
+            )}
 
           <div className="p-3 md:p-4 border-t border-gray-200/50 bg-gray-50/30">
             <Button
