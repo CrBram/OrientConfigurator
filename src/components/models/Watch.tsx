@@ -391,6 +391,9 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
             />
           </>
         )}
+        {selectedComponents.indicators === "classic-indicators" && (
+          <ClassicIndicators position={[0, 0.184, 0.02]} scale={0.389} />
+        )}
         <mesh
           castShadow
           receiveShadow
@@ -399,9 +402,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[-0.002, 0.192, -0.115]}
           scale={0.055}
         />
-        {selectedComponents.indicators === "classic-indicators" && (
-          <ClassicIndicators position={[0, 0.184, 0.02]} scale={0.389} />
-        )}
         <group ref={secondHandGroupRef} position={[0, 0.199, 0]}>
           <mesh
             castShadow
@@ -452,7 +452,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[0, 0.173, -0.001]}
           scale={0.39}
         />
-        {/* Hour hand group - rotates around watch center */}
         <group ref={hourHandGroupRef} position={[0, 0.199, 0]}>
           <mesh
             castShadow
@@ -472,7 +471,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[-0.001, 0.201, -0.001]}
           scale={[0.042, 0.028, 0.019]}
         />
-        {/* Minute hand group - rotates around watch center */}
         <group ref={minuteHandGroupRef} position={[0, 0.199, 0]}>
           <mesh
             castShadow
