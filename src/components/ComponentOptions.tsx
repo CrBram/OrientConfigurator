@@ -156,7 +156,7 @@ export function ComponentOptions({
           </Card>
         </div>
       ) : (
-        <Card className="bg-[#fff9f9] backdrop-blur-md border-0 shadow-xl rounded-t-2xl md:rounded-2xl overflow-hidden w-full md:w-auto">
+        <Card className="bg-[#fff9f9] backdrop-blur-md border-0 shadow-xl rounded-t-2xl md:rounded-2xl overflow-hidden w-full md:w-auto max-h-[30rem] flex flex-col">
           <div className="p-3 md:p-4 border-b border-gray-200/50">
             <div className="flex items-center justify-between mb-0.5">
               <h2
@@ -205,7 +205,7 @@ export function ComponentOptions({
           </div>
           <div
             ref={scrollContainerRef}
-            className="max-h-48 md:max-h-96 overflow-y-auto"
+            className="flex-1 overflow-y-auto"
           >
             <div className="px-3 py-1 md:p-2 space-y-2">
               {category.title === "Dial" && (
