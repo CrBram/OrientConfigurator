@@ -64,8 +64,6 @@ function App() {
 
   const handleHotspotClick = (view: CameraView) => {
     setCameraView(view);
-
-    // Show component options for the clicked hotspot after animation delay
     const categoryKey =
       view === "face"
         ? "face"
@@ -77,10 +75,9 @@ function App() {
     const categoryData = componentOptionsData[categoryKey];
     setCurrentComponentCategory(categoryData);
 
-    // Delay showing options to let camera animation play first
     setTimeout(() => {
       setShowComponentOptions(true);
-    }, 800); // 800ms delay to let camera animation complete
+    }, 800);
   };
 
   const handleOptionSelect = (optionId: string) => {
@@ -145,7 +142,6 @@ function App() {
           />
         </Canvas>
 
-        {/* Component Options Panel */}
         {showComponentOptions && currentComponentCategory && (
           <ComponentOptions
             category={currentComponentCategory}
@@ -177,7 +173,6 @@ function App() {
           />
         )}
 
-        {/* Footer */}
         <Footer
           showDescriptions={showDescriptions}
           onToggleDescriptions={toggleDescriptions}
