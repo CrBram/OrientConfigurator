@@ -33,7 +33,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     secondCrown: { phase: "hidden", progress: 0 },
   });
 
-  // Glass material
   const glassMaterial = useMemo(() => {
     return new THREE.MeshPhysicalMaterial({
       color: 0xffffff,
@@ -80,22 +79,18 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
 
   useFrame(() => {
     const now = new Date();
-    const hours = now.getHours() % 12; // 12-hour format
+    const hours = now.getHours() % 12;
     const minutes = now.getMinutes();
     const seconds = now.getSeconds();
 
-    // Calculate rotations
     const secondAngle = (seconds / 60) * Math.PI * 2;
     const minuteAngle = ((minutes + seconds / 60) / 60) * Math.PI * 2;
     const hourAngle = ((hours + minutes / 60) / 12) * Math.PI * 2;
 
-    // Initial rotations of the hands in the model (need to compensate for these)
     const hourOffset = 0.841;
     const minuteOffset = -0.816;
     const secondOffset = 0.739;
 
-    // Rotate the groups around Y-axis (watch center)
-    // Subtract the initial offsets so hands align correctly with current time
     if (hourHandGroupRef.current) {
       hourHandGroupRef.current.rotation.y = -hourAngle - hourOffset;
     }
@@ -157,15 +152,14 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           currentState.progress + delta / slideDuration,
           1
         );
-        const startX = 0.392; // Current position
-        const endX = 0.392 + 0.25; // Off-screen position
+        const startX = 0.392;
+        const endX = 0.392 + 0.25;
         const currentX = startX + (endX - startX) * newProgress;
 
         firstCrownRef.current.position.set(currentX, 0.184, -0.06);
         firstCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide out complete, go to hidden
           setCrownAnimationState((prev) => ({
             ...prev,
             firstCrown: { phase: "hidden", progress: 0 },
@@ -178,39 +172,33 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         }
       }
 
-      // Handle visible state (maintain position and scale)
       if (currentState.phase === "visible") {
         firstCrownRef.current.scale.setScalar(0.4);
         firstCrownRef.current.position.set(0.392, 0.184, -0.06);
       }
 
-      // Handle hidden state
       if (currentState.phase === "hidden") {
         firstCrownRef.current.scale.setScalar(0);
         firstCrownRef.current.position.set(0.392 + 0.25, 0.184, -0.06);
       }
     }
 
-    // Second crown: shows only for triple-crown
     if (secondCrownRef.current) {
       const shouldShow = knobType === "triple-crown";
       const currentState = crownAnimationState.secondCrown;
 
       if (shouldShow && currentState.phase === "hidden") {
-        // Start sliding in
         setCrownAnimationState((prev) => ({
           ...prev,
           secondCrown: { phase: "sliding", progress: 0 },
         }));
       } else if (!shouldShow && currentState.phase === "visible") {
-        // Start slide out (reverse animation)
         setCrownAnimationState((prev) => ({
           ...prev,
           secondCrown: { phase: "slidingOut", progress: 0 },
         }));
       }
 
-      // Handle slide phase
       if (currentState.phase === "sliding") {
         const newProgress = Math.min(
           currentState.progress + delta / slideDuration,
@@ -224,7 +212,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         secondCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide complete
           setCrownAnimationState((prev) => ({
             ...prev,
             secondCrown: { phase: "visible", progress: 1 },
@@ -237,21 +224,19 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         }
       }
 
-      // Handle slide out phase (reverse animation)
       if (currentState.phase === "slidingOut") {
         const newProgress = Math.min(
           currentState.progress + delta / slideDuration,
           1
         );
-        const startX = 0.368; // Current position
-        const endX = 0.368 + 0.25; // Off-screen position
+        const startX = 0.368;
+        const endX = 0.368 + 0.25;
         const currentX = startX + (endX - startX) * newProgress;
 
         secondCrownRef.current.position.set(currentX, 0.184, 0.14);
         secondCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide out complete, go to hidden
           setCrownAnimationState((prev) => ({
             ...prev,
             secondCrown: { phase: "hidden", progress: 0 },
@@ -264,13 +249,11 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         }
       }
 
-      // Handle visible state (maintain position and scale)
       if (currentState.phase === "visible") {
         secondCrownRef.current.scale.setScalar(0.4);
         secondCrownRef.current.position.set(0.368, 0.184, 0.14);
       }
 
-      // Handle hidden state
       if (currentState.phase === "hidden") {
         secondCrownRef.current.scale.setScalar(0);
         secondCrownRef.current.position.set(0.368 + 0.25, 0.184, 0.14);

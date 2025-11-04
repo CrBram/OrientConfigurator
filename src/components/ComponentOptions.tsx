@@ -57,7 +57,6 @@ export function ComponentOptions({
       const containerRect = scrollContainer.getBoundingClientRect();
       const sectionRect = caseSizeSection.getBoundingClientRect();
 
-      // Check if the case size section is visible in the scroll container
       const isSectionVisible =
         sectionRect.top <= containerRect.bottom &&
         sectionRect.bottom >= containerRect.top;
@@ -67,7 +66,6 @@ export function ComponentOptions({
 
     scrollContainer.addEventListener("scroll", handleScroll);
 
-    // Initial check
     handleScroll();
 
     return () => {
@@ -83,7 +81,6 @@ export function ComponentOptions({
       const containerRect = scrollContainer.getBoundingClientRect();
       const sectionRect = caseSizeSection.getBoundingClientRect();
 
-      // Calculate the scroll position to center the section
       const scrollTop =
         scrollContainer.scrollTop + (sectionRect.top - containerRect.top);
 
@@ -206,13 +203,11 @@ export function ComponentOptions({
             </div>
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
-          {/* Scrollable content area */}
           <div
             ref={scrollContainerRef}
             className="max-h-48 md:max-h-96 overflow-y-auto"
           >
             <div className="px-3 py-1 md:p-2 space-y-2">
-              {/* Dial Color Options */}
               {category.title === "Dial" && (
                 <div className="px-2 mb-3">
                   <h3 className="text-sm font-semibold text-gray-700">Color</h3>
@@ -321,7 +316,6 @@ export function ComponentOptions({
                 </div>
               ))}
 
-              {/* Case Size Options - Scrollable */}
               {category.title === "Dial" &&
                 selectedDialCase &&
                 onDialCaseSelect && (
@@ -419,7 +413,6 @@ export function ComponentOptions({
             </div>
           </div>
 
-          {/* Sticky Case Size Title - Only shows when scrolling */}
           {category.title === "Dial" &&
             selectedDialCase &&
             onDialCaseSelect &&
