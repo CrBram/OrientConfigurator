@@ -11,6 +11,7 @@ import {
 } from "./components/ComponentOptions.tsx";
 import type { CameraView } from "./components/CameraControls.tsx";
 import componentOptionsData from "./data/componentOptions.json";
+import { useComponentStore } from "./store/componentStore";
 
 const cameraSettings = {
   fov: 45,
@@ -26,14 +27,11 @@ function App() {
   const [currentComponentCategory, setCurrentComponentCategory] =
     useState<ComponentCategory | null>(null);
 
-  // Component selection state
-  const [selectedComponents, setSelectedComponents] = useState({
-    face: "blue-quartz",
-    strap: "stainless-steel",
-    knob: "single-crown",
-    indicators: "roman-indicators",
-    dialCase: "standard-case",
-  });
+  const selectedComponents = useComponentStore(
+    (s) => s.selectedComponents
+  );
+  const setComponent = useComponentStore((s) => s.setComponent);
+  const setDialCase = useComponentStore((s) => s.setDialCase);
 
   const basePrice = 499.99;
   const totalPrice = basePrice + calculateAdditionalPrice();
@@ -41,7 +39,6 @@ function App() {
   function calculateAdditionalPrice(): number {
     let additionalPrice = 0;
 
-    // Add prices for selected components
     Object.entries(selectedComponents).forEach(([category, optionId]) => {
       const categoryData =
         componentOptionsData[category as keyof typeof componentOptionsData];
@@ -93,10 +90,7 @@ function App() {
         ? "indicators"
         : "knob";
 
-    setSelectedComponents((prev) => ({
-      ...prev,
-      [categoryKey]: optionId,
-    }));
+    setComponent(categoryKey as any, optionId);
   };
 
   const handleCloseComponentOptions = () => {
@@ -165,10 +159,7 @@ function App() {
             onClose={handleCloseComponentOptions}
             selectedDialCase={selectedComponents.dialCase}
             onDialCaseSelect={(dialCaseId) => {
-              setSelectedComponents((prev) => ({
-                ...prev,
-                dialCase: dialCaseId,
-              }));
+              setDialCase(dialCaseId);
             }}
           />
         )}
