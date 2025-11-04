@@ -12,6 +12,7 @@ import {
 import componentOptionsData from "./data/componentOptions.json";
 import { useComponentStore } from "./store/componentStore";
 import { useCameraStore, type CameraView } from "./store/cameraStore";
+import { useCartStore } from "./store/cartStore";
 
 const cameraSettings = {
   fov: 45,
@@ -32,24 +33,7 @@ function App() {
   const setComponent = useComponentStore((s) => s.setComponent);
   const setDialCase = useComponentStore((s) => s.setDialCase);
   const setCameraView = useCameraStore((s) => s.setCameraView);
-
-  const basePrice = 499.99;
-  const totalPrice = basePrice + calculateAdditionalPrice();
-
-  function calculateAdditionalPrice(): number {
-    let additionalPrice = 0;
-
-    Object.entries(selectedComponents).forEach(([category, optionId]) => {
-      const categoryData =
-        componentOptionsData[category as keyof typeof componentOptionsData];
-      const option = categoryData.options.find((opt) => opt.id === optionId);
-      if (option) {
-        additionalPrice += option.price;
-      }
-    });
-
-    return additionalPrice;
-  }
+  const totalPrice = useCartStore((s) => s.totalPrice);
 
   const handleCheckout = () => {
     console.log("Checkout initiated for €", totalPrice);
