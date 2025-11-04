@@ -1,13 +1,12 @@
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import { Watch } from "./components/models/Watch";
 import { Hotspot } from "./components/Hotspot";
-import { useCameraAnimation } from "./components/CameraControls";
-import type { CameraView } from "./components/CameraControls";
+import { useCameraAnimation } from "./hooks/useCameraAnimation";
+import { useCameraStore, type CameraView } from "./store/cameraStore";
 import { useIsMobile } from "./hooks/useIsMobile";
 import componentOptionsData from "./data/componentOptions.json";
 
 interface ShowcaseProps {
-  cameraView: CameraView;
   showDescriptions: boolean;
   onHotspotClick: (view: CameraView) => void;
   selectedComponents: {
@@ -20,15 +19,14 @@ interface ShowcaseProps {
 }
 
 const Showcase = ({
-  cameraView,
   showDescriptions,
   onHotspotClick,
   selectedComponents,
 }: ShowcaseProps) => {
-  useCameraAnimation(cameraView);
+  useCameraAnimation();
+  const cameraView = useCameraStore((state) => state.cameraView);
   const isMobile = useIsMobile();
 
-  // Helper function to get component name by category and option ID
   const getComponentName = (category: string, optionId: string): string => {
     const categoryData =
       componentOptionsData[category as keyof typeof componentOptionsData];

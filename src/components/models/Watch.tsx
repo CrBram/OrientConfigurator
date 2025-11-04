@@ -1,7 +1,8 @@
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useEffect } from "react";
 import * as THREE from "three";
+import { gsap } from "gsap";
 import { SmallCrown } from "./SmallCrown";
 import componentOptionsData from "../../data/componentOptions.json";
 import { ClassicIndicators } from "./ClassicIndicators";
@@ -27,11 +28,10 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
 
   const firstCrownRef = useRef<THREE.Group>(null);
   const secondCrownRef = useRef<THREE.Group>(null);
-
-  const [crownAnimationState, setCrownAnimationState] = useState({
-    firstCrown: { phase: "hidden", progress: 0 },
-    secondCrown: { phase: "hidden", progress: 0 },
-  });
+  const firstCrownTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const secondCrownTimelineRef = useRef<gsap.core.Timeline | null>(null);
+  const isInitializedRef = useRef(false);
+  const prevKnobRef = useRef<string | null>(null);
 
   const glassMaterial = useMemo(() => {
     return new THREE.MeshPhysicalMaterial({
@@ -102,164 +102,122 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     }
   });
 
-  useFrame((_, delta) => {
+  useEffect(() => {
     const knobType = selectedComponents.knob;
-    const slideDuration = 0.5;
+    const showFirst = knobType !== "single-crown";
+    const showSecond = knobType === "triple-crown";
 
     if (firstCrownRef.current) {
-      const shouldShow = knobType !== "single-crown";
-      const currentState = crownAnimationState.firstCrown;
-
-      if (shouldShow && currentState.phase === "hidden") {
-        setCrownAnimationState((prev) => ({
-          ...prev,
-          firstCrown: { phase: "sliding", progress: 0 },
-        }));
-      } else if (!shouldShow && currentState.phase === "visible") {
-        setCrownAnimationState((prev) => ({
-          ...prev,
-          firstCrown: { phase: "slidingOut", progress: 0 },
-        }));
-      }
-
-      if (currentState.phase === "sliding") {
-        const newProgress = Math.min(
-          currentState.progress + delta / slideDuration,
-          1
-        );
-        const startX = 0.392 + 0.25;
-        const endX = 0.392;
-        const currentX = startX + (endX - startX) * newProgress;
-
-        firstCrownRef.current.position.set(currentX, 0.184, -0.06);
-        firstCrownRef.current.scale.setScalar(0.4);
-
-        if (newProgress >= 1) {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "visible", progress: 1 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "sliding", progress: newProgress },
-          }));
-        }
-      }
-
-      if (currentState.phase === "slidingOut") {
-        const newProgress = Math.min(
-          currentState.progress + delta / slideDuration,
-          1
-        );
-        const startX = 0.392;
-        const endX = 0.392 + 0.25;
-        const currentX = startX + (endX - startX) * newProgress;
-
-        firstCrownRef.current.position.set(currentX, 0.184, -0.06);
-        firstCrownRef.current.scale.setScalar(0.4);
-
-        if (newProgress >= 1) {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "hidden", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            firstCrown: { phase: "slidingOut", progress: newProgress },
-          }));
-        }
-      }
-
-      if (currentState.phase === "visible") {
-        firstCrownRef.current.scale.setScalar(0.4);
-        firstCrownRef.current.position.set(0.392, 0.184, -0.06);
-      }
-
-      if (currentState.phase === "hidden") {
-        firstCrownRef.current.scale.setScalar(0);
-        firstCrownRef.current.position.set(0.392 + 0.25, 0.184, -0.06);
-      }
+      firstCrownRef.current.position.set(showFirst ? 0.392 : 0.392 + 0.25, 0.184, -0.06);
+      firstCrownRef.current.scale.setScalar(showFirst ? 0.4 : 0);
     }
 
     if (secondCrownRef.current) {
-      const shouldShow = knobType === "triple-crown";
-      const currentState = crownAnimationState.secondCrown;
-
-      if (shouldShow && currentState.phase === "hidden") {
-        setCrownAnimationState((prev) => ({
-          ...prev,
-          secondCrown: { phase: "sliding", progress: 0 },
-        }));
-      } else if (!shouldShow && currentState.phase === "visible") {
-        setCrownAnimationState((prev) => ({
-          ...prev,
-          secondCrown: { phase: "slidingOut", progress: 0 },
-        }));
-      }
-
-      if (currentState.phase === "sliding") {
-        const newProgress = Math.min(
-          currentState.progress + delta / slideDuration,
-          1
-        );
-        const startX = 0.368 + 0.25;
-        const endX = 0.368;
-        const currentX = startX + (endX - startX) * newProgress;
-
-        secondCrownRef.current.position.set(currentX, 0.184, 0.14);
-        secondCrownRef.current.scale.setScalar(0.4);
-
-        if (newProgress >= 1) {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "visible", progress: 1 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "sliding", progress: newProgress },
-          }));
-        }
-      }
-
-      if (currentState.phase === "slidingOut") {
-        const newProgress = Math.min(
-          currentState.progress + delta / slideDuration,
-          1
-        );
-        const startX = 0.368;
-        const endX = 0.368 + 0.25;
-        const currentX = startX + (endX - startX) * newProgress;
-
-        secondCrownRef.current.position.set(currentX, 0.184, 0.14);
-        secondCrownRef.current.scale.setScalar(0.4);
-
-        if (newProgress >= 1) {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "hidden", progress: 0 },
-          }));
-        } else {
-          setCrownAnimationState((prev) => ({
-            ...prev,
-            secondCrown: { phase: "slidingOut", progress: newProgress },
-          }));
-        }
-      }
-
-      if (currentState.phase === "visible") {
-        secondCrownRef.current.scale.setScalar(0.4);
-        secondCrownRef.current.position.set(0.368, 0.184, 0.14);
-      }
-
-      if (currentState.phase === "hidden") {
-        secondCrownRef.current.scale.setScalar(0);
-        secondCrownRef.current.position.set(0.368 + 0.25, 0.184, 0.14);
-      }
+      secondCrownRef.current.position.set(showSecond ? 0.368 : 0.368 + 0.25, 0.184, 0.14);
+      secondCrownRef.current.scale.setScalar(showSecond ? 0.4 : 0);
     }
-  });
+
+    prevKnobRef.current = knobType;
+    isInitializedRef.current = true;
+  }, []);
+
+  useEffect(() => {
+    if (!firstCrownRef.current) return;
+
+    const shouldShow = selectedComponents.knob !== "single-crown";
+    const wasShown = prevKnobRef.current ? prevKnobRef.current !== "single-crown" : false;
+    const slideDuration = 0.5;
+
+    if (firstCrownTimelineRef.current) {
+      firstCrownTimelineRef.current.kill();
+    }
+
+    if (!isInitializedRef.current) return;
+
+    if (shouldShow && wasShown) {
+      gsap.set(firstCrownRef.current.position, { x: 0.392, y: 0.184, z: -0.06, overwrite: "auto" });
+      gsap.set(firstCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" });
+    } else if (shouldShow && !wasShown) {
+      firstCrownTimelineRef.current = gsap.timeline();
+      firstCrownTimelineRef.current
+        .set(firstCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" })
+        .fromTo(
+          firstCrownRef.current.position,
+          { x: 0.392 + 0.25, y: 0.184, z: -0.06 },
+          { x: 0.392, duration: slideDuration, ease: "power2.out", overwrite: "auto" }
+        );
+    } else if (!shouldShow && wasShown) {
+      firstCrownTimelineRef.current = gsap.timeline();
+      firstCrownTimelineRef.current
+        .to(firstCrownRef.current.position, {
+          x: 0.392 + 0.25,
+          duration: slideDuration,
+          ease: "power2.in",
+          overwrite: "auto",
+        })
+        .set(firstCrownRef.current.scale, { x: 0, y: 0, z: 0 });
+    } else {
+      gsap.set(firstCrownRef.current.scale, { x: 0, y: 0, z: 0, overwrite: "auto" });
+      gsap.set(firstCrownRef.current.position, { x: 0.392 + 0.25, y: 0.184, z: -0.06, overwrite: "auto" });
+    }
+
+    return () => {
+      if (firstCrownTimelineRef.current) {
+        firstCrownTimelineRef.current.kill();
+      }
+    };
+  }, [selectedComponents.knob]);
+
+  useEffect(() => {
+    if (!secondCrownRef.current) return;
+
+    const shouldShow = selectedComponents.knob === "triple-crown";
+    const wasShown = prevKnobRef.current ? prevKnobRef.current === "triple-crown" : false;
+    const slideDuration = 0.5;
+
+    if (secondCrownTimelineRef.current) {
+      secondCrownTimelineRef.current.kill();
+    }
+
+    if (!isInitializedRef.current) return;
+
+    if (shouldShow && !wasShown) {
+      secondCrownTimelineRef.current = gsap.timeline();
+      secondCrownTimelineRef.current
+        .set(secondCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" })
+        .fromTo(
+          secondCrownRef.current.position,
+          { x: 0.368 + 0.25, y: 0.184, z: 0.14 },
+          { x: 0.368, duration: slideDuration, ease: "power2.out", overwrite: "auto" }
+        );
+    } else if (!shouldShow && wasShown) {
+      secondCrownTimelineRef.current = gsap.timeline();
+      secondCrownTimelineRef.current
+        .to(secondCrownRef.current.position, {
+          x: 0.368 + 0.25,
+          duration: slideDuration,
+          ease: "power2.in",
+          overwrite: "auto",
+        })
+        .set(secondCrownRef.current.scale, { x: 0, y: 0, z: 0 });
+    } else if (shouldShow && wasShown) {
+      gsap.set(secondCrownRef.current.position, { x: 0.368, y: 0.184, z: 0.14, overwrite: "auto" });
+      gsap.set(secondCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" });
+    } else {
+      gsap.set(secondCrownRef.current.position, { x: 0.368 + 0.25, y: 0.184, z: 0.14, overwrite: "auto" });
+      gsap.set(secondCrownRef.current.scale, { x: 0, y: 0, z: 0, overwrite: "auto" });
+    }
+
+    return () => {
+      if (secondCrownTimelineRef.current) {
+        secondCrownTimelineRef.current.kill();
+      }
+    };
+  }, [selectedComponents.knob]);
+
+  useEffect(() => {
+    prevKnobRef.current = selectedComponents.knob;
+  }, [selectedComponents.knob]);
 
   return (
     <group {...props} dispose={null}>

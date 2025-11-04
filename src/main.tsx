@@ -9,9 +9,9 @@ import {
   ComponentOptions,
   type ComponentCategory,
 } from "./components/ComponentOptions.tsx";
-import type { CameraView } from "./components/CameraControls.tsx";
 import componentOptionsData from "./data/componentOptions.json";
 import { useComponentStore } from "./store/componentStore";
+import { useCameraStore, type CameraView } from "./store/cameraStore";
 
 const cameraSettings = {
   fov: 45,
@@ -21,7 +21,6 @@ const cameraSettings = {
 };
 
 function App() {
-  const [cameraView, setCameraView] = useState<CameraView>("default");
   const [showDescriptions, setShowDescriptions] = useState(true);
   const [showComponentOptions, setShowComponentOptions] = useState(false);
   const [currentComponentCategory, setCurrentComponentCategory] =
@@ -32,6 +31,7 @@ function App() {
   );
   const setComponent = useComponentStore((s) => s.setComponent);
   const setDialCase = useComponentStore((s) => s.setDialCase);
+  const setCameraView = useCameraStore((s) => s.setCameraView);
 
   const basePrice = 499.99;
   const totalPrice = basePrice + calculateAdditionalPrice();
@@ -129,7 +129,6 @@ function App() {
           }}
         >
           <Showcase
-            cameraView={cameraView}
             showDescriptions={showDescriptions}
             onHotspotClick={handleHotspotClick}
             selectedComponents={selectedComponents}
