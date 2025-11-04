@@ -96,27 +96,6 @@
         "description": "Premium genuine leather strap",
         "price": 35.0,
         "isDefault": false
-      },
-      {
-        "id": "leather-black",
-        "name": "Black Leather",
-        "description": "Sleek black leather strap",
-        "price": 35.0,
-        "isDefault": false
-      },
-      {
-        "id": "rubber-sport",
-        "name": "Sport Rubber",
-        "description": "Durable rubber strap for active lifestyle",
-        "price": 20.0,
-        "isDefault": false
-      },
-      {
-        "id": "mesh-silver",
-        "name": "Silver Mesh",
-        "description": "Modern mesh bracelet",
-        "price": 45.0,
-        "isDefault": false
       }
     ]
   },

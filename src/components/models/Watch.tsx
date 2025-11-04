@@ -7,6 +7,7 @@ import { SmallCrown } from "./SmallCrown";
 import componentOptionsData from "../../data/componentOptions.json";
 import { ClassicIndicators } from "./ClassicIndicators";
 import { ThinFace } from "./ThinFace";
+import { BrownLeatherStrap } from "./BrownLeatherStrap";
 
 interface WatchProps {
   selectedComponents: {
@@ -108,12 +109,20 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     const showSecond = knobType === "triple-crown";
 
     if (firstCrownRef.current) {
-      firstCrownRef.current.position.set(showFirst ? 0.392 : 0.392 + 0.25, 0.184, -0.06);
+      firstCrownRef.current.position.set(
+        showFirst ? 0.392 : 0.392 + 0.25,
+        0.184,
+        -0.06
+      );
       firstCrownRef.current.scale.setScalar(showFirst ? 0.4 : 0);
     }
 
     if (secondCrownRef.current) {
-      secondCrownRef.current.position.set(showSecond ? 0.368 : 0.368 + 0.25, 0.184, 0.14);
+      secondCrownRef.current.position.set(
+        showSecond ? 0.368 : 0.368 + 0.25,
+        0.184,
+        0.14
+      );
       secondCrownRef.current.scale.setScalar(showSecond ? 0.4 : 0);
     }
 
@@ -125,7 +134,9 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     if (!firstCrownRef.current) return;
 
     const shouldShow = selectedComponents.knob !== "single-crown";
-    const wasShown = prevKnobRef.current ? prevKnobRef.current !== "single-crown" : false;
+    const wasShown = prevKnobRef.current
+      ? prevKnobRef.current !== "single-crown"
+      : false;
     const slideDuration = 0.5;
 
     if (firstCrownTimelineRef.current) {
@@ -135,16 +146,36 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     if (!isInitializedRef.current) return;
 
     if (shouldShow && wasShown) {
-      gsap.set(firstCrownRef.current.position, { x: 0.392, y: 0.184, z: -0.06, overwrite: "auto" });
-      gsap.set(firstCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" });
+      gsap.set(firstCrownRef.current.position, {
+        x: 0.392,
+        y: 0.184,
+        z: -0.06,
+        overwrite: "auto",
+      });
+      gsap.set(firstCrownRef.current.scale, {
+        x: 0.4,
+        y: 0.4,
+        z: 0.4,
+        overwrite: "auto",
+      });
     } else if (shouldShow && !wasShown) {
       firstCrownTimelineRef.current = gsap.timeline();
       firstCrownTimelineRef.current
-        .set(firstCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" })
+        .set(firstCrownRef.current.scale, {
+          x: 0.4,
+          y: 0.4,
+          z: 0.4,
+          overwrite: "auto",
+        })
         .fromTo(
           firstCrownRef.current.position,
           { x: 0.392 + 0.25, y: 0.184, z: -0.06 },
-          { x: 0.392, duration: slideDuration, ease: "power2.out", overwrite: "auto" }
+          {
+            x: 0.392,
+            duration: slideDuration,
+            ease: "power2.out",
+            overwrite: "auto",
+          }
         );
     } else if (!shouldShow && wasShown) {
       firstCrownTimelineRef.current = gsap.timeline();
@@ -157,8 +188,18 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         })
         .set(firstCrownRef.current.scale, { x: 0, y: 0, z: 0 });
     } else {
-      gsap.set(firstCrownRef.current.scale, { x: 0, y: 0, z: 0, overwrite: "auto" });
-      gsap.set(firstCrownRef.current.position, { x: 0.392 + 0.25, y: 0.184, z: -0.06, overwrite: "auto" });
+      gsap.set(firstCrownRef.current.scale, {
+        x: 0,
+        y: 0,
+        z: 0,
+        overwrite: "auto",
+      });
+      gsap.set(firstCrownRef.current.position, {
+        x: 0.392 + 0.25,
+        y: 0.184,
+        z: -0.06,
+        overwrite: "auto",
+      });
     }
 
     return () => {
@@ -172,7 +213,9 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     if (!secondCrownRef.current) return;
 
     const shouldShow = selectedComponents.knob === "triple-crown";
-    const wasShown = prevKnobRef.current ? prevKnobRef.current === "triple-crown" : false;
+    const wasShown = prevKnobRef.current
+      ? prevKnobRef.current === "triple-crown"
+      : false;
     const slideDuration = 0.5;
 
     if (secondCrownTimelineRef.current) {
@@ -184,11 +227,21 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     if (shouldShow && !wasShown) {
       secondCrownTimelineRef.current = gsap.timeline();
       secondCrownTimelineRef.current
-        .set(secondCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" })
+        .set(secondCrownRef.current.scale, {
+          x: 0.4,
+          y: 0.4,
+          z: 0.4,
+          overwrite: "auto",
+        })
         .fromTo(
           secondCrownRef.current.position,
           { x: 0.368 + 0.25, y: 0.184, z: 0.14 },
-          { x: 0.368, duration: slideDuration, ease: "power2.out", overwrite: "auto" }
+          {
+            x: 0.368,
+            duration: slideDuration,
+            ease: "power2.out",
+            overwrite: "auto",
+          }
         );
     } else if (!shouldShow && wasShown) {
       secondCrownTimelineRef.current = gsap.timeline();
@@ -201,11 +254,31 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         })
         .set(secondCrownRef.current.scale, { x: 0, y: 0, z: 0 });
     } else if (shouldShow && wasShown) {
-      gsap.set(secondCrownRef.current.position, { x: 0.368, y: 0.184, z: 0.14, overwrite: "auto" });
-      gsap.set(secondCrownRef.current.scale, { x: 0.4, y: 0.4, z: 0.4, overwrite: "auto" });
+      gsap.set(secondCrownRef.current.position, {
+        x: 0.368,
+        y: 0.184,
+        z: 0.14,
+        overwrite: "auto",
+      });
+      gsap.set(secondCrownRef.current.scale, {
+        x: 0.4,
+        y: 0.4,
+        z: 0.4,
+        overwrite: "auto",
+      });
     } else {
-      gsap.set(secondCrownRef.current.position, { x: 0.368 + 0.25, y: 0.184, z: 0.14, overwrite: "auto" });
-      gsap.set(secondCrownRef.current.scale, { x: 0, y: 0, z: 0, overwrite: "auto" });
+      gsap.set(secondCrownRef.current.position, {
+        x: 0.368 + 0.25,
+        y: 0.184,
+        z: 0.14,
+        overwrite: "auto",
+      });
+      gsap.set(secondCrownRef.current.scale, {
+        x: 0,
+        y: 0,
+        z: 0,
+        overwrite: "auto",
+      });
     }
 
     return () => {
@@ -431,39 +504,46 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[-0.001, 0.192, -0.138]}
           scale={0.039}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StrapChain.geometry}
-          material={materials.Band}
-          position={[-0.001, 0.167, -1.466]}
-          scale={[0.073, 0.016, 0.069]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StrapChainClosing.geometry}
-          material={materials.Band}
-          position={[-0.002, -0.6, 0.003]}
-          scale={[0.076, 0.023, 0.091]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StrapClosing.geometry}
-          material={materials.Band}
-          position={[-0.122, -0.594, -0.001]}
-          rotation={[-Math.PI, 0, 0]}
-          scale={[0.091, 0.019, 0.101]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.StrapInner001.geometry}
-          material={materials.Band}
-          position={[-0.001, 0.167, -0.509]}
-          scale={[0.073, 0.016, 0.103]}
-        />
+        {selectedComponents.strap === "stainless-steel" && (
+          <>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.StrapChain.geometry}
+              material={materials.Band}
+              position={[-0.001, 0.167, -1.466]}
+              scale={[0.073, 0.016, 0.069]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.StrapChainClosing.geometry}
+              material={materials.Band}
+              position={[-0.002, -0.6, 0.003]}
+              scale={[0.076, 0.023, 0.091]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.StrapClosing.geometry}
+              material={materials.Band}
+              position={[-0.122, -0.594, -0.001]}
+              rotation={[-Math.PI, 0, 0]}
+              scale={[0.091, 0.019, 0.101]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.StrapInner001.geometry}
+              material={materials.Band}
+              position={[-0.001, 0.167, -0.509]}
+              scale={[0.073, 0.016, 0.103]}
+            />
+          </>
+        )}
+        {selectedComponents.strap === "leather-brown" && (
+          <BrownLeatherStrap scale={0.4} position={[0.078, 0.115, 0.02]} />
+        )}
         <mesh
           castShadow
           receiveShadow
