@@ -4,9 +4,9 @@ import { useState } from "react";
 import * as THREE from "three";
 
 interface HotspotProps {
-  position: [number, number, number]; // Position on the watch
-  targetPosition: [number, number, number]; // Where the circle appears
-  componentName: string; // Name of the selected component
+  position: [number, number, number];
+  targetPosition: [number, number, number];
+  componentName: string;
   onClick: () => void;
   showDescriptions?: boolean;
 }
@@ -53,10 +53,6 @@ export function Hotspot({
           <div className={`hotspot-circle ${hovered ? "hovered" : ""}`}>
             <div className="hotspot-pulse" />
           </div>
-          {/* Label for the hotspots on hover */}
-          {/* <div className={`hotspot-label ${hovered ? "visible" : ""}`}>
-            <div className="hotspot-label-title">{label}</div>
-          </div> */}
           {showDescriptions && (
             <div className="hotspot-component-name">{componentName}</div>
           )}

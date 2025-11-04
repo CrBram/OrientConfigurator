@@ -29,7 +29,6 @@ interface ComponentOptionsProps {
   selectedOptionId: string;
   onOptionSelect: (optionId: string) => void;
   onClose: () => void;
-  // For dial case size selection
   selectedDialCase?: string;
   onDialCaseSelect?: (dialCaseId: string) => void;
 }

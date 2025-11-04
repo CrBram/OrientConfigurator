@@ -21,18 +21,15 @@ interface WatchProps {
 export function Watch({ selectedComponents, ...props }: WatchProps) {
   const { nodes, materials } = useGLTF("/models/OrientWatchShaded.glb") as any;
 
-  // Refs for watch hand groups (these will rotate around the watch center)
   const hourHandGroupRef = useRef<THREE.Group>(null);
   const minuteHandGroupRef = useRef<THREE.Group>(null);
   const secondHandGroupRef = useRef<THREE.Group>(null);
 
-  // Refs for crown animations
   const firstCrownRef = useRef<THREE.Group>(null);
   const secondCrownRef = useRef<THREE.Group>(null);
 
-  // Animation state for crowns
   const [crownAnimationState, setCrownAnimationState] = useState({
-    firstCrown: { phase: "hidden", progress: 0 }, // 'hidden', 'sliding', 'visible', 'slidingOut'
+    firstCrown: { phase: "hidden", progress: 0 },
     secondCrown: { phase: "hidden", progress: 0 },
   });
 
@@ -73,17 +70,14 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     return baseMaterial;
   }, [materials.Face, selectedComponents.face]);
 
-  // Determine which material to use for the dial based on whether it's the default option
   const dialMaterial = useMemo(() => {
     const faceOption = (componentOptionsData as any).face.options.find(
       (option: any) => option.id === selectedComponents.face
     );
 
-    // Use original material for default option, custom material for others
     return faceOption?.isDefault ? materials.Material : faceMaterial;
   }, [materials.Material, faceMaterial, selectedComponents.face]);
 
-  // Animate watch hands based on current time
   useFrame(() => {
     const now = new Date();
     const hours = now.getHours() % 12; // 12-hour format
@@ -91,11 +85,8 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     const seconds = now.getSeconds();
 
     // Calculate rotations
-    // Second hand ticks discretely (no milliseconds for that classic tick)
     const secondAngle = (seconds / 60) * Math.PI * 2;
-    // Minute hand moves smoothly with seconds
     const minuteAngle = ((minutes + seconds / 60) / 60) * Math.PI * 2;
-    // Hour hand moves smoothly with minutes
     const hourAngle = ((hours + minutes / 60) / 12) * Math.PI * 2;
 
     // Initial rotations of the hands in the model (need to compensate for these)
@@ -116,31 +107,26 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
     }
   });
 
-  // Animate crown visibility based on selected knob type
   useFrame((_, delta) => {
     const knobType = selectedComponents.knob;
-    const slideDuration = 0.5; // Duration for slide phase
+    const slideDuration = 0.5;
 
-    // First crown: shows for double-crown and triple-crown
     if (firstCrownRef.current) {
       const shouldShow = knobType !== "single-crown";
       const currentState = crownAnimationState.firstCrown;
 
       if (shouldShow && currentState.phase === "hidden") {
-        // Start sliding in
         setCrownAnimationState((prev) => ({
           ...prev,
           firstCrown: { phase: "sliding", progress: 0 },
         }));
       } else if (!shouldShow && currentState.phase === "visible") {
-        // Start slide out (reverse animation)
         setCrownAnimationState((prev) => ({
           ...prev,
           firstCrown: { phase: "slidingOut", progress: 0 },
         }));
       }
 
-      // Handle slide phase
       if (currentState.phase === "sliding") {
         const newProgress = Math.min(
           currentState.progress + delta / slideDuration,
@@ -154,7 +140,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         firstCrownRef.current.scale.setScalar(0.4);
 
         if (newProgress >= 1) {
-          // Slide complete
           setCrownAnimationState((prev) => ({
             ...prev,
             firstCrown: { phase: "visible", progress: 1 },
@@ -167,7 +152,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         }
       }
 
-      // Handle slide out phase (reverse animation)
       if (currentState.phase === "slidingOut") {
         const newProgress = Math.min(
           currentState.progress + delta / slideDuration,
@@ -297,7 +281,6 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
   return (
     <group {...props} dispose={null}>
       <group position={[-0.003, 0.2, -0.049]} scale={2.565}>
-        {/* Roman Numerals - visible when roman-indicators is selected */}
         {selectedComponents.indicators === "roman-indicators" && (
           <>
             <mesh
@@ -416,11 +399,9 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           position={[-0.002, 0.192, -0.115]}
           scale={0.055}
         />
-        {/* Classic Indicators - visible when classic-indicators is selected */}
         {selectedComponents.indicators === "classic-indicators" && (
           <ClassicIndicators position={[0, 0.184, 0.02]} scale={0.389} />
         )}
-        {/* Second hand group - rotates around watch center */}
         <group ref={secondHandGroupRef} position={[0, 0.199, 0]}>
           <mesh
             castShadow
