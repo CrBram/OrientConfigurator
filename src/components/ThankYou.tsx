@@ -1,4 +1,5 @@
 import { Button } from "./ui/button";
+import LoadingScreen from "./LoadingScreen";
 
 interface ThankYouProps {
   onBack?: () => void;
@@ -10,6 +11,10 @@ export default function ThankYou({ onBack }: ThankYouProps) {
       className="fixed inset-0 h-screen w-screen"
       style={{ background: "#ededed" }}
     >
+      <LoadingScreen
+        customDuration={2000}
+        customMessage="Processing your order..."
+      />
       <div className="flex flex-col items-center justify-center h-full p-6 text-center">
         <img
           src="/OrientLogoFull.png"

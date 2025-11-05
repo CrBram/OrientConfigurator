@@ -4,13 +4,18 @@ import { gsap } from "gsap";
 
 interface LoadingScreenProps {
   logoSrc?: string;
+  customDuration?: number;
+  customMessage?: string;
 }
 
 const LoadingScreen = ({
   logoSrc = "/OrientLogoFull.png",
+  customDuration,
+  customMessage,
 }: LoadingScreenProps) => {
   const { progress, active } = useProgress();
   const [isVisible, setIsVisible] = useState(true);
+  const [customProgress, setCustomProgress] = useState(0);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const barRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +23,44 @@ const LoadingScreen = ({
   const contentRef = useRef<HTMLDivElement | null>(null);
   const hasFadedRef = useRef(false);
 
+  const isCustomMode = customDuration !== undefined;
+  const effectiveProgress = isCustomMode ? customProgress : progress;
   const clampedProgress = useMemo(
-    () => Math.max(0, Math.min(100, progress)),
-    [progress]
+    () => Math.max(0, Math.min(100, effectiveProgress)),
+    [effectiveProgress]
   );
+
+  useEffect(() => {
+    if (!isCustomMode || !customDuration) return;
+    setIsVisible(true);
+    setCustomProgress(0);
+    hasFadedRef.current = false;
+    const start = Date.now();
+    const id = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const p = Math.min((elapsed / customDuration) * 100, 100);
+      setCustomProgress(p);
+      if (p >= 100) {
+        clearInterval(id);
+        if (containerRef.current && !hasFadedRef.current) {
+          hasFadedRef.current = true;
+          const tl = gsap.timeline({ onComplete: () => setIsVisible(false) });
+          tl.to({}, { duration: 0.1 })
+            .to(
+              contentRef.current,
+              { opacity: 0, duration: 0.35, ease: "power2.inOut" },
+              0
+            )
+            .to(containerRef.current, {
+              autoAlpha: 0,
+              duration: 0.6,
+              ease: "power3.inOut",
+            });
+        }
+      }
+    }, 16);
+    return () => clearInterval(id);
+  }, [isCustomMode, customDuration]);
 
   useEffect(() => {
     if (!barFillRef.current || !barRef.current) return;
@@ -34,7 +73,7 @@ const LoadingScreen = ({
   }, [clampedProgress]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (isCustomMode || !containerRef.current) return;
     if (!active && clampedProgress >= 100 && !hasFadedRef.current) {
       hasFadedRef.current = true;
       const tl = gsap.timeline({ onComplete: () => setIsVisible(false) });
@@ -50,7 +89,7 @@ const LoadingScreen = ({
           ease: "power3.inOut",
         });
     }
-  }, [active, clampedProgress]);
+  }, [active, clampedProgress, isCustomMode]);
 
   if (!isVisible) return null;
 
@@ -89,7 +128,9 @@ const LoadingScreen = ({
           draggable={false}
         />
         <div style={{ color: "#2B2B2B", fontWeight: 500, letterSpacing: 0.5 }}>
-          {Math.round(clampedProgress)}%
+          {customMessage !== undefined
+            ? customMessage
+            : `${Math.round(clampedProgress)}%`}
         </div>
         <div
           ref={barRef}
