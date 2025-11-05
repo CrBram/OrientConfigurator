@@ -14,6 +14,8 @@ import { useComponentStore } from "./store/componentStore";
 import { useCameraStore, type CameraView } from "./store/cameraStore";
 import { useCartStore } from "./store/cartStore";
 import LoadingScreen from "./components/LoadingScreen";
+import CheckoutDrawer from "./components/CheckoutDrawer";
+import ThankYou from "./components/ThankYou";
 
 const cameraSettings = {
   fov: 45,
@@ -27,6 +29,8 @@ function App() {
   const [showComponentOptions, setShowComponentOptions] = useState(false);
   const [currentComponentCategory, setCurrentComponentCategory] =
     useState<ComponentCategory | null>(null);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [showThankYou, setShowThankYou] = useState(false);
 
   const selectedComponents = useComponentStore((s) => s.selectedComponents);
   const setComponent = useComponentStore((s) => s.setComponent);
@@ -35,7 +39,16 @@ function App() {
   const totalPrice = useCartStore((s) => s.totalPrice);
 
   const handleCheckout = () => {
-    console.log("Checkout initiated for €", totalPrice);
+    setIsCheckoutOpen(true);
+  };
+
+  const handleBuy = () => {
+    setIsCheckoutOpen(false);
+    setShowThankYou(true);
+  };
+
+  const handleCloseCheckout = () => {
+    setIsCheckoutOpen(false);
   };
 
   const toggleDescriptions = () => {
@@ -84,80 +97,95 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen mx-auto w-full max-w-[1920px]">
-      <Navigation />
+      {!showThankYou && <Navigation />}
 
       <div className="flex-1 relative" style={{ background: "#ededed" }}>
-        <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-16 xl:left-16 pointer-events-none z-0">
-          <h1
-            className="text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight select-none"
-            style={{ color: "#2B2B2B" }}
-          >
-            <span className="font-light">Orient</span>
-            <br />
-            <span className="text-[#b36868]">Bambino</span>
-          </h1>
-        </div>
+        {showThankYou ? (
+          <ThankYou onBack={() => setShowThankYou(false)} />
+        ) : (
+          <>
+            <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-16 xl:left-16 pointer-events-none z-0">
+              <h1
+                className="text-7xl md:text-8xl lg:text-9xl font-bold leading-none tracking-tight select-none"
+                style={{ color: "#2B2B2B" }}
+              >
+                <span className="font-light">Orient</span>
+                <br />
+                <span className="text-[#b36868]">Bambino</span>
+              </h1>
+            </div>
 
-        <Canvas
-          camera={cameraSettings}
-          shadows
-          gl={{ alpha: true }}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 10,
-          }}
-        >
-          <Suspense fallback={null}>
-            <Showcase
+            <Canvas
+              camera={cameraSettings}
+              shadows
+              gl={{ alpha: true }}
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: 10,
+              }}
+            >
+              <Suspense fallback={null}>
+                <Showcase
+                  showDescriptions={showDescriptions}
+                  onHotspotClick={handleHotspotClick}
+                  selectedComponents={selectedComponents}
+                />
+              </Suspense>
+            </Canvas>
+
+            {/* Overlay while model is loading */}
+            <LoadingScreen />
+
+            {showComponentOptions && currentComponentCategory && (
+              <ComponentOptions
+                category={currentComponentCategory}
+                selectedOptionId={
+                  selectedComponents[
+                    currentComponentCategory.title
+                      .toLowerCase()
+                      .includes("dial") ||
+                    currentComponentCategory.title
+                      .toLowerCase()
+                      .includes("face")
+                      ? "face"
+                      : currentComponentCategory.title
+                          .toLowerCase()
+                          .includes("strap")
+                      ? "strap"
+                      : currentComponentCategory.title
+                          .toLowerCase()
+                          .includes("indicator")
+                      ? "indicators"
+                      : "knob"
+                  ]
+                }
+                onOptionSelect={handleOptionSelect}
+                onClose={handleCloseComponentOptions}
+                selectedDialCase={selectedComponents.dialCase}
+                onDialCaseSelect={(dialCaseId) => {
+                  setDialCase(dialCaseId);
+                }}
+              />
+            )}
+
+            <Footer
               showDescriptions={showDescriptions}
-              onHotspotClick={handleHotspotClick}
-              selectedComponents={selectedComponents}
+              onToggleDescriptions={toggleDescriptions}
+              totalPrice={totalPrice}
+              onCheckout={handleCheckout}
+              showComponentOptions={showComponentOptions}
             />
-          </Suspense>
-        </Canvas>
-
-        {/* Overlay while model is loading */}
-        <LoadingScreen />
-
-        {showComponentOptions && currentComponentCategory && (
-          <ComponentOptions
-            category={currentComponentCategory}
-            selectedOptionId={
-              selectedComponents[
-                currentComponentCategory.title.toLowerCase().includes("dial") ||
-                currentComponentCategory.title.toLowerCase().includes("face")
-                  ? "face"
-                  : currentComponentCategory.title
-                      .toLowerCase()
-                      .includes("strap")
-                  ? "strap"
-                  : currentComponentCategory.title
-                      .toLowerCase()
-                      .includes("indicator")
-                  ? "indicators"
-                  : "knob"
-              ]
-            }
-            onOptionSelect={handleOptionSelect}
-            onClose={handleCloseComponentOptions}
-            selectedDialCase={selectedComponents.dialCase}
-            onDialCaseSelect={(dialCaseId) => {
-              setDialCase(dialCaseId);
-            }}
-          />
+            <CheckoutDrawer
+              isOpen={isCheckoutOpen}
+              onClose={handleCloseCheckout}
+              onBuy={handleBuy}
+            />
+          </>
         )}
-
-        <Footer
-          showDescriptions={showDescriptions}
-          onToggleDescriptions={toggleDescriptions}
-          totalPrice={totalPrice}
-          onCheckout={handleCheckout}
-          showComponentOptions={showComponentOptions}
-        />
       </div>
     </div>
   );
