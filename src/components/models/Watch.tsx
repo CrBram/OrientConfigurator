@@ -542,7 +542,7 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
           </>
         )}
         {selectedComponents.strap === "leather-brown" && (
-          <BrownLeatherStrap scale={0.4} position={[0.078, 0.115, 0.02]} />
+          <BrownLeatherStrap scale={0.4} position={[-4.545, 0.18, 0.02]} />
         )}
         <mesh
           castShadow
