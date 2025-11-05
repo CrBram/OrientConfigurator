@@ -77,7 +77,7 @@ export function CheckoutDrawer({
             </h2>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
             {items.map((it) => (
               <div
                 key={it.key}
