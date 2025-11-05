@@ -88,28 +88,32 @@
         "name": "Stainless Steel",
         "description": "Classic stainless steel bracelet",
         "price": 0,
-        "isDefault": true
+        "isDefault": true,
+        "image": "/components/straps/stainless_steel.png"
       },
       {
         "id": "leather-brown",
         "name": "Brown Leather",
         "description": "Premium genuine leather strap",
-        "price": 35.0,
-        "isDefault": false
+        "price": 125.0,
+        "isDefault": false,
+        "image": "/components/straps/brown_leather.png"
       },
       {
         "id": "leather-black",
         "name": "Black Leather",
         "description": "Premium black genuine leather strap",
-        "price": 35.0,
-        "isDefault": false
+        "price": 125.0,
+        "isDefault": false,
+        "image": "/components/straps/black_leather.png"
       },
       {
         "id": "leather-burlington",
         "name": "Burlington Leather",
         "description": "Premium Burlington leather strap",
-        "price": 35.0,
-        "isDefault": false
+        "price": 125.0,
+        "isDefault": false,
+        "image": "/components/straps/burlington_leather.png"
       }
     ]
   },
