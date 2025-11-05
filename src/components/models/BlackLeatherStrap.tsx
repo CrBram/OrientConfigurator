@@ -74,5 +74,3 @@ export function BlackLeatherStrap(props: BlackLeatherStrapProps) {
     </group>
   );
 }
-
-useGLTF.preload("/models/BlackLeatherBand.glb");

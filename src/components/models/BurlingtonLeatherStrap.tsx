@@ -74,5 +74,3 @@ export function BurlingtonLeatherStrap(props: BurlingtonLeatherStrapProps) {
     </group>
   );
 }
-
-useGLTF.preload("/models/BurlingtonLeatherBand.glb");
