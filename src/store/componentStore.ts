@@ -8,20 +8,23 @@ type SelectedComponents = {
   dialCase: string;
 };
 
+const defaultComponents: SelectedComponents = {
+  face: "blue-quartz",
+  strap: "stainless-steel",
+  knob: "single-crown",
+  indicators: "roman-indicators",
+  dialCase: "thin-case",
+};
+
 type ComponentStore = {
   selectedComponents: SelectedComponents;
   setComponent: (category: keyof SelectedComponents, optionId: string) => void;
   setDialCase: (dialCaseId: string) => void;
+  resetComponents: () => void;
 };
 
 export const useComponentStore = create<ComponentStore>((set) => ({
-  selectedComponents: {
-    face: "blue-quartz",
-    strap: "stainless-steel",
-    knob: "single-crown",
-    indicators: "roman-indicators",
-    dialCase: "thin-case",
-  },
+  selectedComponents: defaultComponents,
   setComponent: (category, optionId) =>
     set((state) => ({
       selectedComponents: { ...state.selectedComponents, [category]: optionId },
@@ -30,4 +33,8 @@ export const useComponentStore = create<ComponentStore>((set) => ({
     set((state) => ({
       selectedComponents: { ...state.selectedComponents, dialCase: dialCaseId },
     })),
+  resetComponents: () =>
+    set({
+      selectedComponents: defaultComponents,
+    }),
 }));

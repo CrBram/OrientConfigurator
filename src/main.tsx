@@ -35,6 +35,7 @@ function App() {
   const selectedComponents = useComponentStore((s) => s.selectedComponents);
   const setComponent = useComponentStore((s) => s.setComponent);
   const setDialCase = useComponentStore((s) => s.setDialCase);
+  const resetComponents = useComponentStore((s) => s.resetComponents);
   const setCameraView = useCameraStore((s) => s.setCameraView);
   const totalPrice = useCartStore((s) => s.totalPrice);
 
@@ -101,7 +102,12 @@ function App() {
 
       <div className="flex-1 relative" style={{ background: "#ededed" }}>
         {showThankYou ? (
-          <ThankYou onBack={() => setShowThankYou(false)} />
+          <ThankYou
+            onBack={() => {
+              resetComponents();
+              setShowThankYou(false);
+            }}
+          />
         ) : (
           <>
             <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-16 xl:left-16 pointer-events-none z-0">

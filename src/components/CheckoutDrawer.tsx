@@ -77,17 +77,19 @@ export function CheckoutDrawer({
             </h2>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-2">
+          <div className="flex-1 overflow-y-auto px-6 py-3 space-y-1">
             {items.map((it) => (
               <div
                 key={it.key}
-                className="flex items-center justify-between gap-4"
+                className="flex items-center justify-between gap-3"
               >
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">
+                  <p className="text-base font-semibold text-gray-900 truncate">
                     {it.title}
                   </p>
-                  <p className="text-sm text-gray-600 truncate">{it.name}</p>
+                  <p className="text-[15px] text-gray-700 truncate">
+                    {it.name}
+                  </p>
                 </div>
                 {it.price > 0 && (
                   <div className="text-sm font-semibold text-accent whitespace-nowrap">
