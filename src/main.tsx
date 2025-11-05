@@ -16,6 +16,7 @@ import { useCartStore } from "./store/cartStore";
 import LoadingScreen from "./components/LoadingScreen";
 import CheckoutDrawer from "./components/CheckoutDrawer";
 import ThankYou from "./components/ThankYou";
+import { usePreloadStraps } from "./hooks/usePreloadStraps";
 
 const cameraSettings = {
   fov: 45,
@@ -38,6 +39,7 @@ function App() {
   const resetComponents = useComponentStore((s) => s.resetComponents);
   const setCameraView = useCameraStore((s) => s.setCameraView);
   const totalPrice = useCartStore((s) => s.totalPrice);
+  const preloadStraps = usePreloadStraps();
 
   const handleCheckout = () => {
     setIsCheckoutOpen(true);
@@ -68,6 +70,11 @@ function App() {
         : "indicators";
     const categoryData = componentOptionsData[categoryKey];
     setCurrentComponentCategory(categoryData);
+
+    // Preload strap models when hotspot is clicked
+    if (view === "strap") {
+      preloadStraps();
+    }
 
     setTimeout(() => {
       setShowComponentOptions(true);
