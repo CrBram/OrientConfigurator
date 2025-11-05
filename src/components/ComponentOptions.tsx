@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import componentOptionsData from "../data/componentOptions.json";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 import {
@@ -203,10 +204,7 @@ export function ComponentOptions({
             </div>
             <p className="text-sm text-gray-600">{category.description}</p>
           </div>
-          <div
-            ref={scrollContainerRef}
-            className="flex-1 overflow-y-auto"
-          >
+          <div ref={scrollContainerRef} className="flex-1 overflow-y-auto">
             <div className="px-3 py-1 md:p-2 space-y-2">
               {category.title === "Dial" && (
                 <div className="px-2 mb-3">
@@ -326,86 +324,54 @@ export function ComponentOptions({
                         Case Size
                       </h3>
                       <div className="space-y-2">
-                        <div
-                          className={`relative group cursor-pointer transition-all duration-200 rounded-xl overflow-hidden p-3 ${
-                            selectedDialCase === "standard-case"
-                              ? "ring-2 ring-[#b36868] ring-offset-1"
-                              : "hover:bg-gray-50/50"
-                          }`}
-                          onClick={() => onDialCaseSelect("standard-case")}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-semibold text-sm text-gray-800">
-                                Standard Case
-                              </h4>
-                              <p className="text-gray-600 text-xs">
-                                Classic standard dial case
-                              </p>
-                            </div>
-                            <div className="w-5 h-5 flex-shrink-0">
-                              {selectedDialCase === "standard-case" && (
-                                <div className="w-5 h-5 bg-[#b36868] rounded-full flex items-center justify-center">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="10"
-                                    height="10"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="white"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <polyline points="20,6 9,17 4,12" />
-                                  </svg>
+                        {componentOptionsData.dialCase.options.map(
+                          (caseOption) => (
+                            <div
+                              key={caseOption.id}
+                              className={`relative group cursor-pointer transition-all duration-200 rounded-xl overflow-hidden p-3 ${
+                                selectedDialCase === caseOption.id
+                                  ? "ring-2 ring-[#b36868] ring-offset-1"
+                                  : "hover:bg-gray-50/50"
+                              }`}
+                              onClick={() => onDialCaseSelect(caseOption.id)}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <h4 className="font-semibold text-sm text-gray-800">
+                                    {caseOption.name}
+                                  </h4>
+                                  <p className="text-gray-600 text-xs">
+                                    {caseOption.description}
+                                  </p>
+                                  {caseOption.price > 0 && (
+                                    <span className="text-[#b36868] font-semibold text-xs">
+                                      +€{caseOption.price}
+                                    </span>
+                                  )}
                                 </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div
-                          className={`relative group cursor-pointer transition-all duration-200 rounded-xl overflow-hidden p-3 ${
-                            selectedDialCase === "thin-case"
-                              ? "ring-2 ring-[#b36868] ring-offset-1"
-                              : "hover:bg-gray-50/50"
-                          }`}
-                          onClick={() => onDialCaseSelect("thin-case")}
-                        >
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="font-semibold text-sm text-gray-800">
-                                Thin Case
-                              </h4>
-                              <p className="text-gray-600 text-xs">
-                                Elegant thin dial case
-                              </p>
-                              <span className="text-[#b36868] font-semibold text-xs">
-                                +€25
-                              </span>
-                            </div>
-                            <div className="w-5 h-5 flex-shrink-0">
-                              {selectedDialCase === "thin-case" && (
-                                <div className="w-5 h-5 bg-[#b36868] rounded-full flex items-center justify-center">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="10"
-                                    height="10"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="white"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <polyline points="20,6 9,17 4,12" />
-                                  </svg>
+                                <div className="w-5 h-5 flex-shrink-0">
+                                  {selectedDialCase === caseOption.id && (
+                                    <div className="w-5 h-5 bg-[#b36868] rounded-full flex items-center justify-center">
+                                      <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="white"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      >
+                                        <polyline points="20,6 9,17 4,12" />
+                                      </svg>
+                                    </div>
+                                  )}
                                 </div>
-                              )}
+                              </div>
                             </div>
-                          </div>
-                        </div>
+                          )
+                        )}
                       </div>
                     </div>
                   </>
