@@ -1,4 +1,4 @@
-import { StrictMode, useState } from "react";
+import { StrictMode, useState, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { Canvas } from "@react-three/fiber";
@@ -13,6 +13,7 @@ import componentOptionsData from "./data/componentOptions.json";
 import { useComponentStore } from "./store/componentStore";
 import { useCameraStore, type CameraView } from "./store/cameraStore";
 import { useCartStore } from "./store/cartStore";
+import LoadingScreen from "./components/LoadingScreen";
 
 const cameraSettings = {
   fov: 45,
@@ -27,9 +28,7 @@ function App() {
   const [currentComponentCategory, setCurrentComponentCategory] =
     useState<ComponentCategory | null>(null);
 
-  const selectedComponents = useComponentStore(
-    (s) => s.selectedComponents
-  );
+  const selectedComponents = useComponentStore((s) => s.selectedComponents);
   const setComponent = useComponentStore((s) => s.setComponent);
   const setDialCase = useComponentStore((s) => s.setDialCase);
   const setCameraView = useCameraStore((s) => s.setCameraView);
@@ -112,12 +111,17 @@ function App() {
             zIndex: 10,
           }}
         >
-          <Showcase
-            showDescriptions={showDescriptions}
-            onHotspotClick={handleHotspotClick}
-            selectedComponents={selectedComponents}
-          />
+          <Suspense fallback={null}>
+            <Showcase
+              showDescriptions={showDescriptions}
+              onHotspotClick={handleHotspotClick}
+              selectedComponents={selectedComponents}
+            />
+          </Suspense>
         </Canvas>
+
+        {/* Overlay while model is loading */}
+        <LoadingScreen />
 
         {showComponentOptions && currentComponentCategory && (
           <ComponentOptions
