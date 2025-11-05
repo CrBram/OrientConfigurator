@@ -106,14 +106,6 @@
         "price": 125.0,
         "isDefault": false,
         "image": "/components/straps/black_leather.png"
-      },
-      {
-        "id": "leather-burlington",
-        "name": "Burlington Leather",
-        "description": "Premium Burlington leather strap",
-        "price": 125.0,
-        "isDefault": false,
-        "image": "/components/straps/burlington_leather.png"
       }
     ]
   },
