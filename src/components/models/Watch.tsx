@@ -8,6 +8,8 @@ import componentOptionsData from "../../data/componentOptions.json";
 import { ClassicIndicators } from "./ClassicIndicators";
 import { ThinFace } from "./ThinFace";
 import { BrownLeatherStrap } from "./BrownLeatherStrap";
+import { BurlingtonLeatherStrap } from "./BurlingtonLeatherStrap";
+import { BlackLeatherStrap } from "./BlackLeatherStrap";
 
 interface WatchProps {
   selectedComponents: {
@@ -543,6 +545,12 @@ export function Watch({ selectedComponents, ...props }: WatchProps) {
         )}
         {selectedComponents.strap === "leather-brown" && (
           <BrownLeatherStrap scale={0.4} position={[-4.545, 0.18, 0.02]} />
+        )}
+        {selectedComponents.strap === "leather-black" && (
+          <BlackLeatherStrap scale={0.4} position={[-4.545, 0.18, 0.02]} />
+        )}
+        {selectedComponents.strap === "leather-burlington" && (
+          <BurlingtonLeatherStrap scale={0.4} position={[-4.545, 0.18, 0.02]} />
         )}
         <mesh
           castShadow

@@ -97,6 +97,22 @@
         "price": 35.0,
         "isDefault": false
       }
+      ,
+      {
+        "id": "leather-black",
+        "name": "Black Leather",
+        "description": "Premium black genuine leather strap",
+        "price": 35.0,
+        "isDefault": false
+      }
+      ,
+      {
+        "id": "leather-burlington",
+        "name": "Burlington Leather",
+        "description": "Premium Burlington leather strap",
+        "price": 35.0,
+        "isDefault": false
+      }
     ]
   },
   "knob": {
