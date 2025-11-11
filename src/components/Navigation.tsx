@@ -1,10 +1,42 @@
+import { Link, useLocation } from "react-router-dom";
+
 export function Navigation() {
+  const location = useLocation();
+  const isConfigurator = location.pathname === "/configurator";
+  const isHome = location.pathname === "/";
+
   return (
     <nav className="px-6 py-6 pb-1 md:px-8 lg:px-12 xl:px-16">
       <div className="flex items-center justify-between bg-[#fff9f9] rounded-[5rem] shadow-sm py-4 px-8">
-        <img src="/orient-seeklogo.png" alt="Orient" className="h-6 md:h-7" />
-        <div>
-          <p className="font-semibold text-xs text-secondary-foreground">
+        <Link to="/">
+          <img
+            src="/orient-seeklogo.png"
+            alt="Orient"
+            className="h-6 md:h-7 cursor-pointer"
+          />
+        </Link>
+        <div className="flex items-center gap-3 sm:gap-6">
+          <Link
+            to="/"
+            className={`text-sm md:text-sm font-medium transition-colors ${
+              isHome
+                ? "text-[#b36868] font-semibold"
+                : "text-secondary-foreground hover:text-[#b36868]"
+            }`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/configurator"
+            className={`text-sm md:text-sm font-medium transition-colors ${
+              isConfigurator
+                ? "text-[#b36868] font-semibold"
+                : "text-secondary-foreground hover:text-[#b36868]"
+            }`}
+          >
+            Configurator
+          </Link>
+          <p className="ml-2 sm:ml-4 font-semibold text-xs text-secondary-foreground">
             <span className="text-accent font-bold">BC.</span>
           </p>
         </div>
@@ -12,23 +44,3 @@ export function Navigation() {
     </nav>
   );
 }
-
-/*
-    <nav className="px-6 py-6 pb-1 md:px-8 lg:px-12 xl:px-16">
-      <div className="flex items-center justify-between">
-        <img src="/orient-seeklogo.png" alt="Orient" className="h-6 md:h-8" />
-        <div>
-          <p className="font-semibold text-xs text-secondary-foreground">
-            <span className="text-accent font-bold">BC.</span>
-          </p>
-        </div>
-      </div>
-      <div
-        className="mt-4 h-[1px]"
-        style={{
-          backgroundColor: "#6F6C6C",
-          opacity: 0.5,
-        }}
-      />
-    </nav>
-*/
