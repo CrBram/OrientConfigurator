@@ -9,6 +9,7 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const cameraSettings = {
   fov: 45,
@@ -23,6 +24,7 @@ const Product = () => {
   const scrollAmountRef = useRef(0);
   const maxScroll = 2000;
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const isAtStep1 = scrollProgress >= 0.8 && scrollProgress < 1.8;
   const isAtStep2 = scrollProgress >= 1.8 && scrollProgress < 2.8;
@@ -101,7 +103,7 @@ const Product = () => {
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
         {isAtStep3 ? (
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/configurator")}
             className="bg-[#b36868] hover:bg-[#a05a5a] text-white px-6 py-3 rounded-full font-medium text-sm md:text-base flex items-center gap-2 cursor-pointer"
           >
             Configure now
@@ -134,7 +136,7 @@ const Product = () => {
           position: "absolute",
           left: 0,
           width: "100%",
-          height: "82%",
+          height: isMobile ? "78%" : "82%",
           zIndex: 1,
           bottom: 0,
         }}

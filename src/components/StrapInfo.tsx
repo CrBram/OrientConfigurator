@@ -11,12 +11,10 @@ const StrapInfo = () => {
         className="text-sm sm:text-base md:text-lg lg:text-xl font-light"
         style={{ color: "#2B2B2B" }}
       >
-        Choose the perfect strap for your watch. From stainless steel to premium
-        leather options.
+        Premium strap quality for optimal comfort and durability.
       </p>
     </div>
   );
 };
 
 export default StrapInfo;
-

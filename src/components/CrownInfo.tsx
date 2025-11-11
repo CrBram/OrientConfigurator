@@ -11,12 +11,10 @@ const CrownInfo = () => {
         className="text-sm sm:text-base md:text-lg lg:text-xl font-light md:ml-auto"
         style={{ color: "#2B2B2B" }}
       >
-        Select your preferred crown design. From classic single crown to elegant
-        triple crown options.
+        Unique crown design that utilizes the watch's power reserve.
       </p>
     </div>
   );
 };
 
 export default CrownInfo;
-

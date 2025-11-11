@@ -11,8 +11,8 @@ const FaceInfo = () => {
         className="text-sm sm:text-base md:text-lg lg:text-xl font-light"
         style={{ color: "#2B2B2B" }}
       >
-        Customize your dial color and case size to match your personal style.
-        Choose from elegant finishes and case thicknesses.
+        The Orient Bambino uses a unique dial design that is both functional and
+        stylish.
       </p>
     </div>
   );
