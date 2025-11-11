@@ -3,6 +3,9 @@ import ProductWatch from "@/components/ProductWatch";
 import { useComponentStore } from "@/store/componentStore";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 const cameraSettings = {
   fov: 45,
@@ -16,6 +19,9 @@ const Product = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const scrollAmountRef = useRef(0);
   const maxScroll = 2000;
+  const navigate = useNavigate();
+
+  const isAtStep3 = scrollProgress >= 2.8;
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -69,18 +75,30 @@ const Product = () => {
         />
       </div>
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 pointer-events-none z-2 flex flex-col items-center gap-2">
-        <p
-          className="text-sm md:text-base font-light"
-          style={{ color: "#2B2B2B" }}
-        >
-          Scroll to learn more
-        </p>
-        <img
-          src="/scroll-icon.png"
-          alt="Scroll"
-          className="h-6 w-6 md:h-8 md:w-8"
-        />
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
+        {isAtStep3 ? (
+          <Button
+            onClick={() => navigate("/")}
+            className="bg-[#b36868] hover:bg-[#a05a5a] text-white px-6 py-3 rounded-full font-medium text-sm md:text-base flex items-center gap-2 cursor-pointer"
+          >
+            Configure now
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        ) : (
+          <div className="pointer-events-none flex flex-col items-center gap-2">
+            <p
+              className="text-sm md:text-base font-light"
+              style={{ color: "#2B2B2B" }}
+            >
+              Scroll to learn more
+            </p>
+            <img
+              src="/scroll-icon.png"
+              alt="Scroll"
+              className="h-6 w-6 md:h-8 md:w-8"
+            />
+          </div>
+        )}
       </div>
 
       <LoadingScreen />
@@ -92,10 +110,10 @@ const Product = () => {
         style={{
           position: "absolute",
           left: 0,
-          top: 0,
           width: "100%",
-          height: "100%",
+          height: "80%",
           zIndex: 1,
+          bottom: 0,
         }}
       >
         <Suspense fallback={null}>
