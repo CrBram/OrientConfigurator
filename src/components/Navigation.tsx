@@ -1,9 +1,28 @@
 import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useComponentStore } from "@/store/componentStore";
+import { useCameraStore } from "@/store/cameraStore";
+
+// Store previous pathname outside component to persist across remounts
+let previousPathname: string | null = null;
 
 export function Navigation() {
   const location = useLocation();
+  const resetComponents = useComponentStore((s) => s.resetComponents);
+  const setCameraView = useCameraStore((s) => s.setCameraView);
   const isConfigurator = location.pathname === "/configurator";
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+
+    if (previousPathname !== null && previousPathname !== currentPath) {
+      resetComponents();
+      setCameraView("default");
+    }
+
+    previousPathname = currentPath;
+  }, [location.pathname, resetComponents, setCameraView]);
 
   return (
     <nav className="px-6 py-6 pb-1 md:px-8 lg:px-12 xl:px-16">
