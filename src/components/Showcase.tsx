@@ -1,10 +1,10 @@
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
-import { Watch } from "./components/models/Watch";
-import { Hotspot } from "./components/Hotspot";
-import { useCameraAnimation } from "./hooks/useCameraAnimation";
-import { useCameraStore, type CameraView } from "./store/cameraStore";
-import { useIsMobile } from "./hooks/useIsMobile";
-import componentOptionsData from "./data/componentOptions.json";
+import { Watch } from "./models/Watch";
+import { Hotspot } from "./Hotspot";
+import { useCameraAnimation } from "../hooks/useCameraAnimation";
+import { useCameraStore, type CameraView } from "../store/cameraStore";
+import { useIsMobile } from "../hooks/useIsMobile";
+import componentOptionsData from "../data/componentOptions.json";
 
 interface ShowcaseProps {
   showDescriptions: boolean;
