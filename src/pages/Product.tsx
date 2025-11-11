@@ -8,7 +8,7 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 const cameraSettings = {
@@ -29,6 +29,34 @@ const Product = () => {
   const isAtStep1 = scrollProgress >= 0.8 && scrollProgress < 1.8;
   const isAtStep2 = scrollProgress >= 1.8 && scrollProgress < 2.8;
   const isAtStep3 = scrollProgress >= 2.8;
+
+  const goToStep = (step: number) => {
+    const targetProgress = step;
+    const targetScrollAmount = (targetProgress / 3) * maxScroll;
+
+    scrollAmountRef.current = targetScrollAmount;
+    setScrollProgress(targetProgress);
+  };
+
+  const goToPreviousStep = () => {
+    if (isAtStep3) {
+      goToStep(2);
+    } else if (isAtStep2) {
+      goToStep(1);
+    } else if (isAtStep1) {
+      goToStep(0);
+    }
+  };
+
+  const goToNextStep = () => {
+    if (scrollProgress < 0.8) {
+      goToStep(1);
+    } else if (isAtStep1) {
+      goToStep(2);
+    } else if (isAtStep2) {
+      goToStep(3);
+    }
+  };
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -102,13 +130,51 @@ const Product = () => {
 
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
         {isAtStep3 ? (
-          <Button
-            onClick={() => navigate("/configurator")}
-            className="bg-[#b36868] hover:bg-[#a05a5a] text-white px-6 py-3 rounded-full font-medium text-sm md:text-base flex items-center gap-2 cursor-pointer"
-          >
-            Configure now
-            <ArrowRight className="h-4 w-4" />
-          </Button>
+          isMobile ? (
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={goToPreviousStep}
+                className="bg-white/80 hover:bg-white text-[#2B2B2B] p-3 rounded-full"
+                aria-label="Previous step"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                onClick={() => navigate("/configurator")}
+                className="bg-[#b36868] hover:bg-[#a05a5a] text-white px-6 py-3 rounded-full font-medium text-sm md:text-base flex items-center gap-2 cursor-pointer"
+              >
+                Configure now
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </div>
+          ) : (
+            <Button
+              onClick={() => navigate("/configurator")}
+              className="bg-[#b36868] hover:bg-[#a05a5a] text-white px-6 py-3 rounded-full font-medium text-sm md:text-base flex items-center gap-2 cursor-pointer"
+            >
+              Configure now
+              <ArrowRight className="h-4 w-4" />
+            </Button>
+          )
+        ) : isMobile ? (
+          <div className="flex items-center gap-4">
+            <Button
+              onClick={goToPreviousStep}
+              disabled={scrollProgress < 0.8}
+              className="bg-white/80 hover:bg-white text-[#2B2B2B] p-3 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Previous step"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <Button
+              onClick={goToNextStep}
+              disabled={isAtStep3}
+              className="bg-white/80 hover:bg-white text-[#2B2B2B] p-3 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+              aria-label="Next step"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </div>
         ) : (
           <div className="pointer-events-none flex flex-col items-center gap-2">
             <p
