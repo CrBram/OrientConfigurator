@@ -1,5 +1,8 @@
 import LoadingScreen from "@/components/LoadingScreen";
 import ProductWatch from "@/components/ProductWatch";
+import FaceInfo from "@/components/FaceInfo";
+import CrownInfo from "@/components/CrownInfo";
+import StrapInfo from "@/components/StrapInfo";
 import { useComponentStore } from "@/store/componentStore";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useState, useRef } from "react";
@@ -21,6 +24,8 @@ const Product = () => {
   const maxScroll = 2000;
   const navigate = useNavigate();
 
+  const isAtStep1 = scrollProgress >= 0.8 && scrollProgress < 1.8;
+  const isAtStep2 = scrollProgress >= 1.8 && scrollProgress < 2.8;
   const isAtStep3 = scrollProgress >= 2.8;
 
   useEffect(() => {
@@ -74,6 +79,24 @@ const Product = () => {
           className="h-6 w-auto"
         />
       </div>
+
+      {isAtStep1 && (
+        <div className="absolute bottom-30 left-6 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 pointer-events-none z-10">
+          <FaceInfo />
+        </div>
+      )}
+
+      {isAtStep2 && (
+        <div className="absolute bottom-30 right-6 md:right-8 lg:right-12 xl:bottom-14 xl:right-16 pointer-events-none z-10">
+          <CrownInfo />
+        </div>
+      )}
+
+      {isAtStep3 && (
+        <div className="absolute bottom-30 left-6 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 pointer-events-none z-10">
+          <StrapInfo />
+        </div>
+      )}
 
       <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
         {isAtStep3 ? (
