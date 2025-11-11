@@ -3,6 +3,7 @@ import ProductWatch from "@/components/ProductWatch";
 import FaceInfo from "@/components/FaceInfo";
 import CrownInfo from "@/components/CrownInfo";
 import StrapInfo from "@/components/StrapInfo";
+import { Navigation } from "@/components/Navigation";
 import { useComponentStore } from "@/store/componentStore";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useEffect, useState, useRef } from "react";
@@ -86,28 +87,24 @@ const Product = () => {
       className="relative h-screen w-full overflow-hidden"
       style={{ background: "#ededed" }}
     >
-      <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-14 xl:left-16 pointer-events-none z-0 max-w-[calc(100vw-3rem)] md:max-w-none">
+      <div className="absolute top-28 left-6 md:top-26 md:left-8 lg:top-28 lg:left-12 xl:left-16 pointer-events-none z-0 max-w-[calc(100vw-3rem)] md:max-w-none">
         <h1
-          className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight flex flex-wrap gap-x-2 md:gap-x-4 gap-y-0"
+          className="text-5xl md:text-6xl lg:text-7xl font-bold leading-none tracking-tight flex flex-wrap gap-x-2 md:gap-x-4 gap-y-0"
           style={{ color: "#2B2B2B" }}
         >
           <span className="font-light">Orient</span>
           <span className="text-[#b36868]">Bambino</span>
         </h1>
         <p
-          className="text-lg md:text-2xl lg:text-3xl font-light italic mt-1 ml-1.5"
+          className="text-lg md:text-xl lg:text-2xl font-light italic mt-1 ml-1.5"
           style={{ color: "#2B2B2B" }}
         >
           When design meets elegance
         </p>
       </div>
 
-      <div className="absolute top-6 right-6">
-        <img
-          src="/orient-seeklogo.png"
-          alt="Orient Logo"
-          className="h-6 w-auto"
-        />
+      <div className="absolute top-0 left-0 right-0 z-20">
+        <Navigation />
       </div>
 
       {isAtStep1 && (
