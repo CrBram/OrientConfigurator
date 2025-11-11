@@ -2,6 +2,8 @@ import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import { Watch } from "./models/Watch";
 import { useScrollCameraAnimation } from "../hooks/useScrollCameraAnimation";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { useThree, useFrame } from "@react-three/fiber";
+import { useRef } from "react";
 
 interface ProductWatchProps {
   selectedComponents: {
@@ -18,8 +20,31 @@ const ProductWatch = ({
   selectedComponents,
   scrollProgress,
 }: ProductWatchProps) => {
+  const { camera } = useThree();
+  const animationProgress = useRef(0);
+  const startPos: [number, number, number] = [2.5, 5, 2];
+  const endPos: [number, number, number] = [2.5, 4, 2.6];
+  const isAnimating = useRef(true);
+
+  useFrame(() => {
+    if (isAnimating.current) {
+      animationProgress.current += 0.02;
+      if (animationProgress.current >= 1) {
+        animationProgress.current = 1;
+        isAnimating.current = false;
+      }
+      const t = Math.min(animationProgress.current, 1);
+      const eased = t * (2 - t);
+      camera.position.set(
+        startPos[0] + (endPos[0] - startPos[0]) * eased,
+        startPos[1] + (endPos[1] - startPos[1]) * eased,
+        startPos[2] + (endPos[2] - startPos[2]) * eased
+      );
+    }
+  });
+
   useScrollCameraAnimation({
-    scrollProgress,
+    scrollProgress: isAnimating.current ? 0 : scrollProgress,
     targetPosition: [0, 4, 1],
     targetLookAt: [0, 0.5, 0],
     secondTargetPosition: [2, 0.5, 1],

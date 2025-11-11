@@ -15,7 +15,7 @@ const cameraSettings = {
   fov: 45,
   near: 0.1,
   far: 200,
-  position: [2.5, 4, 2.6] as [number, number, number],
+  position: [2.5, 6, 1.6] as [number, number, number],
 };
 
 const Product = () => {

@@ -31,7 +31,7 @@ export function useScrollCameraAnimation({
 
     const orbitControls = controls as unknown as OrbitControlsImpl;
 
-    if (initialPositionRef.current === null) {
+    if (initialPositionRef.current === null && scrollProgress > 0) {
       initialPositionRef.current = [
         camera.position.x,
         camera.position.y,
@@ -39,13 +39,15 @@ export function useScrollCameraAnimation({
       ];
     }
 
-    if (initialLookAtRef.current === null) {
+    if (initialLookAtRef.current === null && scrollProgress > 0) {
       initialLookAtRef.current = [
         orbitControls.target.x,
         orbitControls.target.y,
         orbitControls.target.z,
       ];
     }
+
+    if (initialPositionRef.current === null) return;
 
     const [initX, initY, initZ] = initialPositionRef.current;
     const [initLookX, initLookY, initLookZ] = initialLookAtRef.current;
