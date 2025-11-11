@@ -1,6 +1,6 @@
 import { OrbitControls, Environment, ContactShadows } from "@react-three/drei";
 import { Watch } from "./models/Watch";
-import { useCameraAnimation } from "../hooks/useCameraAnimation";
+import { useScrollCameraAnimation } from "../hooks/useScrollCameraAnimation";
 import { useIsMobile } from "../hooks/useIsMobile";
 
 interface ProductWatchProps {
@@ -11,10 +11,22 @@ interface ProductWatchProps {
     indicators: string;
     dialCase: string;
   };
+  scrollProgress: number;
 }
 
-const ProductWatch = ({ selectedComponents }: ProductWatchProps) => {
-  useCameraAnimation();
+const ProductWatch = ({
+  selectedComponents,
+  scrollProgress,
+}: ProductWatchProps) => {
+  useScrollCameraAnimation({
+    scrollProgress,
+    targetPosition: [0, 4, 1],
+    targetLookAt: [0, 0.5, 0],
+    secondTargetPosition: [2, 0.5, 1],
+    secondTargetLookAt: [0.8, 0.5, 0],
+    thirdTargetPosition: [-1.6, 1, 4],
+    thirdTargetLookAt: [0, -0.5, 0],
+  });
   const isMobile = useIsMobile();
 
   return (

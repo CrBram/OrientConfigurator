@@ -2,7 +2,7 @@ import LoadingScreen from "@/components/LoadingScreen";
 import ProductWatch from "@/components/ProductWatch";
 import { useComponentStore } from "@/store/componentStore";
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 
 const cameraSettings = {
   fov: 45,
@@ -13,9 +13,38 @@ const cameraSettings = {
 
 const Product = () => {
   const selectedComponents = useComponentStore((s) => s.selectedComponents);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollAmountRef = useRef(0);
+  const maxScroll = 2000;
+
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+
+      scrollAmountRef.current += e.deltaY;
+
+      scrollAmountRef.current = Math.max(
+        0,
+        Math.min(maxScroll, scrollAmountRef.current)
+      );
+
+      // Calculate progress from 0 to 3 (for three scroll phases)
+      const progress = (scrollAmountRef.current / maxScroll) * 3;
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
 
   return (
-    <div className="relative h-screen w-full" style={{ background: "#ededed" }}>
+    <div
+      className="relative h-screen w-full overflow-hidden"
+      style={{ background: "#ededed" }}
+    >
       <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-14 xl:left-16 pointer-events-none z-0">
         <h1
           className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
@@ -40,7 +69,7 @@ const Product = () => {
         />
       </div>
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 pointer-events-none z-0 flex flex-col items-center gap-2">
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 pointer-events-none z-2 flex flex-col items-center gap-2">
         <p
           className="text-sm md:text-base font-light"
           style={{ color: "#2B2B2B" }}
@@ -54,15 +83,6 @@ const Product = () => {
         />
       </div>
 
-      <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 lg:bottom-12 lg:left-12 xl:bottom-14 xl:left-16 pointer-events-none z-0">
-        <p
-          className="text-xs md:text-sm font-medium"
-          style={{ color: "#b36868" }}
-        >
-          BC.
-        </p>
-      </div>
-
       <LoadingScreen />
 
       <Canvas
@@ -71,15 +91,18 @@ const Product = () => {
         gl={{ alpha: true }}
         style={{
           position: "absolute",
-          top: 40,
           left: 0,
+          top: 0,
           width: "100%",
-          height: "85%",
-          zIndex: 10,
+          height: "100%",
+          zIndex: 1,
         }}
       >
         <Suspense fallback={null}>
-          <ProductWatch selectedComponents={selectedComponents} />
+          <ProductWatch
+            selectedComponents={selectedComponents}
+            scrollProgress={scrollProgress}
+          />
         </Suspense>
       </Canvas>
     </div>
