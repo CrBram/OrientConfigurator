@@ -108,24 +108,24 @@ const Product = () => {
       </div>
 
       {isAtStep1 && (
-        <div className="absolute bottom-30 left-6 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 pointer-events-none z-10">
+        <div className="absolute bottom-32 md:bottom-30 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 left-6 pointer-events-none z-10">
           <FaceInfo />
         </div>
       )}
 
       {isAtStep2 && (
-        <div className="absolute bottom-30 right-6 md:right-8 lg:right-12 xl:bottom-14 xl:right-16 pointer-events-none z-10">
+        <div className="absolute bottom-32 md:bottom-30 md:right-8 lg:right-12 xl:bottom-14 xl:right-16 right-6 pointer-events-none z-10">
           <CrownInfo />
         </div>
       )}
 
       {isAtStep3 && (
-        <div className="absolute bottom-30 left-6 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 pointer-events-none z-10">
+        <div className="absolute bottom-32 md:bottom-30 md:left-8 lg:left-12 xl:bottom-14 xl:left-16 left-6 pointer-events-none z-10">
           <StrapInfo />
         </div>
       )}
 
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
+      <div className="absolute bottom-20 md:bottom-6 left-1/2 transform -translate-x-1/2 z-2 flex flex-col items-center gap-2">
         {isAtStep3 ? (
           isMobile ? (
             <div className="flex items-center gap-4">
