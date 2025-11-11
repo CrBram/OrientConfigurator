@@ -70,7 +70,7 @@ const Product = () => {
           className="text-lg md:text-2xl lg:text-3xl font-light italic mt-1 ml-1.5"
           style={{ color: "#2B2B2B" }}
         >
-          When design meets elegance.
+          When design meets elegance
         </p>
       </div>
 

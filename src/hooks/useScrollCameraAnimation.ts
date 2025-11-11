@@ -50,7 +50,9 @@ export function useScrollCameraAnimation({
     if (initialPositionRef.current === null) return;
 
     const [initX, initY, initZ] = initialPositionRef.current;
-    const [initLookX, initLookY, initLookZ] = initialLookAtRef.current;
+    const [initLookX, initLookY, initLookZ] = initialLookAtRef.current ?? [
+      0, 0, 0,
+    ];
 
     // Add sticky zones at the end of each phase
     let normalizedProgress = scrollProgress;
