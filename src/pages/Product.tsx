@@ -11,7 +11,7 @@ const cameraSettings = {
   fov: 45,
   near: 0.1,
   far: 200,
-  position: [2.5, 4, 3.6] as [number, number, number],
+  position: [2.5, 4, 2.6] as [number, number, number],
 };
 
 const Product = () => {
@@ -51,13 +51,13 @@ const Product = () => {
       className="relative h-screen w-full overflow-hidden"
       style={{ background: "#ededed" }}
     >
-      <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-14 xl:left-16 pointer-events-none z-0">
+      <div className="absolute top-6 left-6 md:top-8 md:left-8 lg:top-12 lg:left-12 xl:top-14 xl:left-16 pointer-events-none z-0 max-w-[calc(100vw-3rem)] md:max-w-none">
         <h1
-          className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight"
+          className="text-6xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight flex flex-wrap gap-x-2 md:gap-x-4 gap-y-0"
           style={{ color: "#2B2B2B" }}
         >
           <span className="font-light">Orient</span>
-          <span className="ml-4 text-[#b36868]">Bambino</span>
+          <span className="text-[#b36868]">Bambino</span>
         </h1>
         <p
           className="text-lg md:text-2xl lg:text-3xl font-light italic mt-1 ml-1.5"
@@ -111,7 +111,7 @@ const Product = () => {
           position: "absolute",
           left: 0,
           width: "100%",
-          height: "80%",
+          height: "82%",
           zIndex: 1,
           bottom: 0,
         }}
